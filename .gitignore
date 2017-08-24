@@ -2,3 +2,4 @@
 /build
 .idea
 /testing
+package-lock.json
