@@ -1,0 +1,12 @@
+#fp-container {
+    margin-top: 50px;
+    padding: 0 10px;
+    font-size: large;
+    text-align: center;
+}
+
+#fp-container ul {
+    /*display: block;*/
+    text-align: left;
+    /*font-size: larger;*/
+}

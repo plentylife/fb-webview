@@ -16,7 +16,7 @@ class App extends Component {
       <MuiThemeProvider>
       <Router>
         <div id="app-container">
-          <Redirect to="/" />
+          {/*<Redirect to="/" />*/}
           <Route exact path="/" component={FallbackPage}/>
           <Route exact path="/donation" component={NewDonationPage}/>
         </div>
