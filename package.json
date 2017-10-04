@@ -6,24 +6,27 @@
     "material-ui": "^0.19.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "urijs": "^1.18.12",
-    "react-router-dom": "^4.2.0"
+    "react-native": "^0.48.4",
+    "react-native-web": "^0.1.0",
+    "react-router-dom": "^4.2.0",
+    "urijs": "^1.18.12"
   },
   "devDependencies": {
-    "react-dev-utils": "^4.0.1",
-    "css-loader": "^0.28.7",
-    "file-loader": "^0.11.2",
-    "style-loader": "^0.18.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
     "jshint": "^2.9.5",
     "jshint-loader": "^0.8.4",
     "node-libs-browser": "^2.0.0",
+    "react-dev-utils": "^4.0.1",
+    "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.6.0"
   }
 }
