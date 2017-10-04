@@ -2,6 +2,7 @@ path = require('path')
 
 const ExtractPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack')
 
 const babelLoaderConfiguration = {
   test: /\.(js|jsx|es6)$/,
@@ -14,10 +15,10 @@ const babelLoaderConfiguration = {
   use: {
     loader: 'babel-loader',
     options: {
-      // cacheDirectory: true,
+      cacheDirectory: true,
       // This aliases 'react-native' to 'react-native-web' and includes only
       // the modules needed by the app
-      // plugins: ['react-native-web/babel'],
+      plugins: ['react-native-web/babel'],
       // The 'react-native' preset is recommended (or use your own .babelrc)
       presets: ["react-native"]
     }
@@ -65,10 +66,14 @@ module.exports = {
     //   }
     // ]
   },
-  // plugins: [
-  //   new UglifyJSPlugin(),
-  //   new ExtractPlugin("styles.css"),
-  // ],
+  plugins: [
+    new UglifyJSPlugin(),
+    // new ExtractPlugin("styles.css"),
+    new webpack.DefinePlugin({
+      BASE_PATH: '/test',
+    })
+
+  ],
   resolve: {
     extensions: ['.js', '.jsx', '.web.js', '.es6'],
     alias: {

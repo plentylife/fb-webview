@@ -1,13 +1,14 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar';
+import { AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 
 export default function ContentTemplate(props) {
   return (
-    <span>
+    <View>
       <AppBar title={props.title}/>
-      <div id="content">
+      <ScrollView id="content">
         {props.children}
-      </div>
-    </span>
+      </ScrollView>
+    </View>
   )
 }

@@ -10,12 +10,13 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <!--<link rel="manifest" href="%PUBLIC_URL%/manifest.json">-->
     <!--<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">-->
 
     <script>
-      window.appId = "INSERT_APP_ID"
+      window.APP_ID = "[INSERT_APP_ID]"
+      window.BASE_PATH = "[BASE_PATH]"
       //if agg id == ins ... fixme
     </script>
 
@@ -45,6 +46,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script src="resources/index.js"></script>
+    <script src="[BASE_PATH]/resources/index.js"></script>
   </body>
 </html>

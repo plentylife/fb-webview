@@ -2,6 +2,10 @@
 
 export default class FbUtils {
 
+  static path(path) {
+    return window.BASE_PATH + path
+  }
+
   injectFbLibrary() {
     (function (d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];

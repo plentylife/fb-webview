@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import { AppRegistry, ScrollView, Image, Text, View } from 'react-native';
 import {Redirect, Route, BrowserRouter as Router} from 'react-router-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
 import NewDonationPage from '../pages/NewDonationPage'
+import U from '../utils/FbUtils'
 
 class App extends Component {
 
@@ -13,17 +15,19 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
       <Router>
-        <div id="app-container">
+        <View id="app-container">
           {/*<Redirect to="/" />*/}
-          <Route exact path="/" component={FallbackPage}/>
-          <Route exact path="/donation" component={NewDonationPage}/>
-        </div>
+          <Route exact path={U.path("/fallback")} component={FallbackPage}/>
+          <Route exact path={U.path("/donation")} component={NewDonationPage}/>
+        </View>
       </Router>
       </MuiThemeProvider>
     );
   }
 }
+
+const theme = createMuiTheme();
 
 export default App;
