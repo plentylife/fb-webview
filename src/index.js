@@ -1,7 +1,6 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
 import { AppRegistry } from 'react-native';
-import './index.css';
 import Main from './controllers/Main';
 // import registerServiceWorker from './registerServiceWorker';
 

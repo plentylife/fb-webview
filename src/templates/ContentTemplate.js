@@ -1,6 +1,5 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar';
-import '../css/templates.css'
 
 export default function ContentTemplate(props) {
   return (

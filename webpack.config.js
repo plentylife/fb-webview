@@ -40,7 +40,7 @@ module.exports = {
     index: "./src/index.js",
   },
   output: {
-    path: __dirname + "/webview",
+    path: __dirname + "/webview/resources",
     filename: '[name].js',
   },
   module : {
