@@ -1,5 +1,6 @@
 path = require('path')
 
+const SplitByPathPlugin = require('webpack-split-by-path');
 const ExtractPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack')
@@ -67,12 +68,16 @@ module.exports = {
     // ]
   },
   plugins: [
-    new UglifyJSPlugin(),
+    // new UglifyJSPlugin(),
     // new ExtractPlugin("styles.css"),
-    new webpack.DefinePlugin({
-      BASE_PATH: '/test',
+    // new webpack.DefinePlugin({
+    //   BASE_PATH: '/test',
+    // })
+    new SplitByPathPlugin([
+      { name: 'index', path: 'src/' },
+      { name: 'vendor', path: path.join(__dirname, 'node_modules/')},
+    ], {
     })
-
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.web.js', '.es6'],

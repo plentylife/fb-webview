@@ -4,6 +4,7 @@ import Main from './controllers/Main';
 
 // process.env.NODE_ENV = 'production';
 
+
 // register the app
 AppRegistry.registerComponent('App', () => Main);
 

@@ -3,8 +3,14 @@ import { AppRegistry, ScrollView, Image, Text, View } from 'react-native';
 import {Redirect, Route, BrowserRouter as Router} from 'react-router-dom'
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
-import NewDonationPage from '../pages/NewDonationPage'
+import NewDonationPage from '../pages/CreateDonationPages'
 import U from '../utils/FbUtils'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from "./reducers"
+import DonationRouter from './DonationRouter'
+
+const store = createStore(reducer, {newOffer: {description: "blah blah om my"}})
 
 class App extends Component {
 
@@ -14,16 +20,19 @@ class App extends Component {
   }
 
   render() {
+    console.log("app")
     return (
-      <MuiThemeProvider theme={theme}>
-      <Router>
-        <View id="app-container">
-          {/*<Redirect to="/" />*/}
-          <Route exact path={U.path("/fallback")} component={FallbackPage}/>
-          <Route exact path={U.path("/donation")} component={NewDonationPage}/>
-        </View>
-      </Router>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+        <Router>
+          <View id="app-container">
+            {/*<Redirect to="/" />*/}
+            <Route exact path={U.path("/fallback")} component={FallbackPage}/>
+            <Route path={U.path("/donation")} component={DonationRouter}/>
+          </View>
+        </Router>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }
