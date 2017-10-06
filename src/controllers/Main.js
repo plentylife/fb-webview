@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import { AppRegistry, ScrollView, Image, Text, View } from 'react-native';
-import {Redirect, Route, BrowserRouter as Router} from 'react-router-dom'
-import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
+import {View} from 'react-native';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {MuiThemeProvider} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
-import NewDonationPage from '../pages/CreateDonationPages'
-import U from '../utils/FbUtils'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import reducer from "./reducers"
+import {path} from '../utils/Common'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+import reducer from "../redux/reducers"
 import DonationRouter from './DonationRouter'
+import theme from '../assets/theme'
 
-const store = createStore(reducer, {newOffer: {description: "blah blah om my"}})
+const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
 
 class App extends Component {
 
@@ -20,23 +20,22 @@ class App extends Component {
   }
 
   render() {
-    console.log("app")
+    console.log("app");
     return (
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-        <Router>
-          <View id="app-container">
-            {/*<Redirect to="/" />*/}
-            <Route exact path={U.path("/fallback")} component={FallbackPage}/>
-            <Route path={U.path("/donation")} component={DonationRouter}/>
-          </View>
-        </Router>
+          <Router>
+            <View id="app-container">
+              {/*<Redirect to="/" />*/}
+              <Route exact path={path("/fallback")} component={FallbackPage}/>
+              <Route path={path("/donation")} component={DonationRouter}/>
+            </View>
+          </Router>
         </MuiThemeProvider>
       </Provider>
     );
   }
 }
 
-const theme = createMuiTheme();
 
 export default App;
