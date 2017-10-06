@@ -13,7 +13,7 @@ class SelectTags extends Component {
     console.log("SelectTags render ", this.props);
     let classes = this.props.classes;
     let i = -1;
-    return (<View className={classes.fullWidth}>
+    return (<View className={classes.fullWidth} style={{flexGrow: 1, display: 'flex'}}>
       <View className={[classes.tokenContainer, classes.rowFlex].join(' ')}>
         {this.props.tokens.map(t => {
           i += 1;
@@ -21,7 +21,7 @@ class SelectTags extends Component {
             return <SelectableTokenComponent key={i} index={i} token={t.token} isSelected={t.isSelected}
                                              onSelect={this.props.onSelect}/>
           } else {
-            return <Typography type="headline" key={i} className={classes.token} component={Text}>{t.token}</Typography>
+            return <Typography type="body1" key={i} className={classes.token} component={Text}>{t.token}</Typography>
           }
         })}
       </View>
@@ -54,10 +54,9 @@ class SelectableToken extends Component {
 
   render() {
     let classes = this.props.classes;
-    console.log("Selectable token", this.props);
 
-    return (<TouchableWithoutFeedback onPress={this.onSelect}>
-      <View>
+    return (<TouchableWithoutFeedback onPress={this.onSelect} style={{flexGrow: 1, display: 'flex'}}>
+      <View style={{flexGrow: 1, display: 'flex'}}>
 
         <Typography
           className={[classes.token, classes.selectable, this.props.isSelected ? classes.selected : ""].join(' ')}
