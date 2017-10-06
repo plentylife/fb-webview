@@ -9,7 +9,7 @@ export default class FbUtils {
       }
       js = d.createElement(s);
       js.id = id;
-      js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+      js.src = "https://connect.facebook.com/en_US/messenger.Extensions.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'Messenger'));
   }
@@ -18,14 +18,15 @@ export default class FbUtils {
    *
    * @param onFail, function that is executed if getting user id failed. Should happen only on outdated or web clients.
    */
-  getUserId(onFail) {
-    MessengerExtensions.getContext(window.appId, (context) => {
-      return context.psid
-    }, () => {
+  static getUserId(onSuccess, onFail) {
+    MessengerExtensions.getContext(window.APP_ID, (context) => {
+      onSuccess(context.psid)
+    }, (e, m) => {
+      console.log("get context failed", e, m);
       MessengerExtensions.getUserID(function success(uids) {
-        return uids.psid
-      }, function error() {
-        onFail()
+        onSuccess(uids.psid)
+      }, function error(e, m) {
+        onFail(e, m)
       });
     })
   }
