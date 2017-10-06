@@ -13,7 +13,7 @@ class EnterDescription extends Component {
     this.state = {
       description: this.props.description,
       charsMax: 150,
-      charsLeft: 150,
+      charsLeft: 150 - this.props.description.length,
     };
 
     this.onTextChange = this.onTextChange.bind(this);
