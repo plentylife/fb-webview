@@ -1,14 +1,9 @@
 /* global MessengerExtensions */
 
 export default class FbUtils {
-
-  static path(path) {
-    return window.BASE_PATH + path
-  }
-
-  injectFbLibrary() {
+  static injectFbLibrary() {
     (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
+      let js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {
         return;
       }
@@ -37,25 +32,25 @@ export default class FbUtils {
 
 
   share() {
-    var messageToShare = {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
+    let messageToShare = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
           "elements": [{
-            "title":"Testing webview",
-            "default_action":{
-              "type":"web_url",
+            "title": "Testing webview",
+            "default_action": {
+              "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url":"https://plenty.life/webview"
+              "url": "https://plenty.life/webview"
             },
-            "buttons":[{
-              "type":"web_url",
+            "buttons": [{
+              "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url":"https://plenty.life/webview",
-              "title":"Test"
+              "url": "https://plenty.life/webview",
+              "title": "Test"
             }]
           }]
         }
