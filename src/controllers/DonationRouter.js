@@ -1,4 +1,4 @@
-import Create from '../pages/CreateDonationPages'
+import Create from '../pages/donation/CreateDonationPage'
 import {path} from '../utils/Common'
 import {View} from 'react-native';
 import React from 'react';

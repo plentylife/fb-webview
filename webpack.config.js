@@ -1,9 +1,9 @@
-path = require('path')
+path = require('path');
 
 const SplitByPathPlugin = require('webpack-split-by-path');
 const ExtractPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 const babelLoaderConfiguration = {
   test: /\.(js|jsx|es6)$/,
@@ -50,22 +50,6 @@ module.exports = {
       babelLoaderConfiguration,
       imageLoaderConfiguration
     ]
-    // ,
-    // loaders :[
-    //   {
-    //     test: /\.css$/,
-    //     loader: "style-loader!css-loader"
-    //     // loader: ExtractPlugin.extract('style-loader', 'css-loader')
-    //   },
-    //   {
-    //     test: /\.(png|jpg|svg)$/,
-    //     loaders: ['url', 'image-webpack']
-    //   },
-    //   {
-    //     test: /\.mp3$/,
-    //     loader: 'file-loader'
-    //   }
-    // ]
   },
   plugins: [
     // new UglifyJSPlugin(),
@@ -83,6 +67,10 @@ module.exports = {
     extensions: ['.js', '.jsx', '.web.js', '.es6'],
     alias: {
       'react-native': 'react-native-web',
-    }
+    },
+    modules: [
+      path.resolve('./src'),
+      path.resolve('./node_modules')
+    ]
   },
 };
