@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
 import {MuiThemeProvider} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
-import {path} from '../utils/Common'
+import {viewPath} from 'utils/Common'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import reducer from "../redux/reducers"
@@ -33,6 +33,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    window.viewPath = viewPath;
     console.log("injectig fb lib");
     window.extAsyncInit = () => {
       console.log("lib is inj");
@@ -42,15 +43,16 @@ class App extends Component {
   }
 
   render() {
-    console.log("app");
+    let donationPath = viewPath("/donation");
+    console.log("app with paths", donationPath);
     return (
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
           <Router>
             <View id="app-container">
-              {this.state.failedToGetUserId && <Redirect to={path("/fallback")}/>}
-              <Route exact path={path("/fallback")} component={FallbackPage}/>
-              <Route path={path("/donation")} component={DonationRouter}/>
+              {this.state.failedToGetUserId && <Redirect to={viewPath("/fallback")}/>}
+              <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
+              <Route path={viewPath("/donation")} component={DonationRouter}/>
             </View>
           </Router>
         </MuiThemeProvider>

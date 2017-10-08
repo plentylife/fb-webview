@@ -6,3 +6,5 @@ package-lock.json
 /webview/**/index.js
 /webview/**/vendor.js
 /webview/**/manifest.js
+/webview/**/poly.js
+/webview/**/fetch.js
