@@ -26,7 +26,9 @@ const styles = theme => {
       display: 'flex',
       flexGrow: 1,
       flexShrink: 1,
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
+      marginLeft: '0.5em',
+      marginRight: '0.5em',
     },
     tokenContainer: Object.assign({
       flexWrap: 'wrap',
@@ -35,8 +37,12 @@ const styles = theme => {
     }, theme.fullWidth),
     selectable: {
       marginLeft: '0.5em',
+      marginRight: 0,
       fontSize: "1.5em"
     },
+    // nonSelectable: {
+    //
+    // },
     selected: {
       flexGrow: 2,
       marginLeft: '1em',
