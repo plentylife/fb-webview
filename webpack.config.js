@@ -39,6 +39,8 @@ const imageLoaderConfiguration = {
 
 module.exports = {
   entry: {
+    fetch: "whatwg-fetch",
+    poly: 'babel-polyfill',
     index: "./src/index.js",
   },
   output: {
@@ -55,7 +57,7 @@ module.exports = {
     // new UglifyJSPlugin(),
     // new ExtractPlugin("styles.css"),
     // new webpack.DefinePlugin({
-    //   BASE_PATH: '/test',
+    //   VIEW_PATH: '/test',
     // })
     new SplitByPathPlugin([
       { name: 'index', path: 'src/' },

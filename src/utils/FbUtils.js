@@ -1,5 +1,7 @@
 /* global MessengerExtensions */
 
+import ServerComms from './ServerComms'
+
 export default class FbUtils {
   static injectFbLibrary() {
     (function (d, s, id) {
@@ -20,15 +22,11 @@ export default class FbUtils {
    */
   static getUserId(onSuccess, onFail) {
     MessengerExtensions.getContext(window.APP_ID, (context) => {
-      onSuccess(context.psid)
+      console.log("setting signdned request", context, context.signed_request);
+      ServerComms.signedRequest = context.signed_request
     }, (e, m) => {
-      console.log("get context failed", e, m);
-      MessengerExtensions.getUserID(function success(uids) {
-        onSuccess(uids.psid)
-      }, function error(e, m) {
-        onFail(e, m)
-      });
-    })
+      onFail(e, m)
+    });
   }
 
 
@@ -68,6 +66,6 @@ export default class FbUtils {
         // An error occurred in the process
         console.log("error sharing", errorCode, errorMessage)
       },
-      messageToShare,"broadcast");
+      messageToShare, "broadcast");
   }
 }

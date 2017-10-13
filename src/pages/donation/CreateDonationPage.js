@@ -9,6 +9,7 @@ import Error from 'templates/ErrorTemplates'
 import styles from './styles'
 import EnterDescription from './EnterDescripton'
 import SelectTags from './SelectTags'
+import Server from 'utils/ServerComms'
 
 class CreateDonationPages extends Component {
   constructor(props) {
@@ -73,6 +74,7 @@ class CreateDonationPages extends Component {
       this.setState({error: "You must select at least " + this.minTags + " tag"});
     } else {
       this.setState({error: ""});
+      Server.postNewDonation(this.props.tokens)
     }
   }
 
