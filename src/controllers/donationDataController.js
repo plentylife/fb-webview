@@ -29,12 +29,12 @@ function mapDispatchToProps(dispatch) {
         }
 
         if (push) {
-          tokens.push({token: runningToken, isSelectable: selectable, isSelected: false});
+          tokens.push({token: runningToken, isSelectable: selectable, isTagged: false});
           runningToken = ""
         }
         runningToken += char;
       });
-      tokens.push({token: runningToken, isSelectable: lastAlpha, isSelected: false});
+      tokens.push({token: runningToken, isSelectable: lastAlpha, isTagged: false});
 
       dispatch(act.setNewOfferDescription(descr));
       dispatch(act.setNewOfferDescriptionTokens(tokens))

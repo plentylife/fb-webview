@@ -18,7 +18,7 @@ class SelectTags extends Component {
         {this.props.tokens.map(t => {
           i += 1;
           if (t.isSelectable) {
-            return <SelectableTokenComponent key={i} index={i} token={t.token} isSelected={t.isSelected}
+            return <SelectableTokenComponent key={i} index={i} token={t.token} isTagged={t.isTagged}
                                              onSelect={this.props.onSelect}/>
           } else {
             return <Typography type="body1" key={i} className={classes.token} component={Text}>{t.token}</Typography>
@@ -59,7 +59,7 @@ class SelectableToken extends Component {
       <View style={{flexGrow: 1, display: 'flex'}}>
 
         <Typography
-          className={[classes.token, classes.selectable, this.props.isSelected ? classes.selected : ""].join(' ')}
+          className={[classes.token, classes.selectable, this.props.isTagged ? classes.selected : ""].join(' ')}
           component={Text} ref={(t) => this.typography = t}>
           {this.props.token}
         </Typography>

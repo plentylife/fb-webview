@@ -46,7 +46,7 @@ class CreateDonationPages extends Component {
   countSelectedTags() {
     let count = 0;
     this.props.tokens.forEach(t => {
-      if (t.isSelected) {
+      if (t.isTagged) {
         count += 1
       }
     });
@@ -58,7 +58,7 @@ class CreateDonationPages extends Component {
     let count = this.countSelectedTags();
     console.log("selecting token at index, current count", index, count);
     // reached maximum, AND selecting a tag that is not already selected
-    if (count >= this.maxTags && !this.props.tokens[index].isSelected) {
+    if (count >= this.maxTags && !this.props.tokens[index].isTagged) {
       this.setState({error: "You cannot have more than " + this.maxTags + " tags"})
     } else {
       this.setState({error: ""});

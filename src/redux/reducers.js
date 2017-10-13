@@ -10,7 +10,7 @@ function newOffer(state, action) {
     case act.SELECT_NEW_OFFER_DESCRIPTION_TOKEN:
       let tokens = [...state.tokens].map(t => (Object.assign({}, t)));
       let t = tokens[action.index];
-      t.isSelected = !t.isSelected;
+      t.isTagged = !t.isTagged;
       return Object.assign({}, state, {tokens: tokens})
   }
   return state ? state : {}
