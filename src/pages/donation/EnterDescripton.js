@@ -61,4 +61,4 @@ class EnterDescription extends Component {
   }
 }
 
-export default connect(ctr.mapNewOfferToProps, ctr.mapDispatchToProps)(withStyles(styles)(EnterDescription));
+export default connect(ctr.mapNewOfferToProps, ctr.mapNewOfferDispatchToProps)(withStyles(styles)(EnterDescription));

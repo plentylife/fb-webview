@@ -6,7 +6,7 @@ function mapNewOfferToProps(state, ownProps) {
 
 const alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-function mapDispatchToProps(dispatch) {
+function mapNewOfferDispatchToProps(dispatch) {
   return {
     onDescriptionChange: descr => {
       // in format {token: str, isSelectable: bool}
@@ -48,4 +48,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export {mapNewOfferToProps, mapDispatchToProps}
+export {mapNewOfferToProps, mapNewOfferDispatchToProps}

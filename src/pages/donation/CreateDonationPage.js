@@ -94,4 +94,4 @@ class CreateDonationPages extends Component {
   }
 }
 
-export default connect(ctr.mapNewOfferToProps, ctr.mapDispatchToProps)(withStyles(styles)(CreateDonationPages))
+export default connect(ctr.mapNewOfferToProps, ctr.mapNewOfferDispatchToProps)(withStyles(styles)(CreateDonationPages))

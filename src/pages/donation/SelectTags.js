@@ -71,4 +71,4 @@ class SelectableToken extends Component {
 
 const SelectableTokenComponent = withStyles(styles)(SelectableToken);
 
-export default connect(ctr.mapNewOfferToProps, ctr.mapDispatchToProps)(withStyles(styles)(SelectTags));
+export default connect(ctr.mapNewOfferToProps, ctr.mapNewOfferDispatchToProps)(withStyles(styles)(SelectTags));
