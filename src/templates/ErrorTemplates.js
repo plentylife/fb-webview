@@ -23,7 +23,6 @@ const styles = theme => ({
  */
 function ErrorBlock(props) {
   let c = props.classes;
-  console.log("Error block classes", c);
 
   if (props.error) {
     return (<View className={c.fullWidth}>
