@@ -16,6 +16,14 @@ function newOffer(state, action) {
   return state ? state : {}
 }
 
-const reducer = combineReducers({newOffer});
+function loadState(state, action) {
+  switch (action.type) {
+    case act.LIBRARY_LOADED:
+      return [...state, action.library]
+  }
+  return state ? state : []
+}
+
+const reducer = combineReducers({newOffer, loadState});
 
 export default reducer

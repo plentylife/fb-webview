@@ -4,6 +4,12 @@ function mapNewOfferToProps(state, ownProps) {
   return Object.assign({}, state.newOffer, ownProps)
 }
 
+function mapViewOfferToProps(state, ownProps) {
+  let loadedSdk = state.loadState.includes("sdk");
+  console.log("view offer to props", ownProps);
+  return Object.assign({}, {shouldLoad: loadedSdk}, ownProps)
+}
+
 const alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 function mapNewOfferDispatchToProps(dispatch) {
@@ -48,4 +54,4 @@ function mapNewOfferDispatchToProps(dispatch) {
   }
 }
 
-export {mapNewOfferToProps, mapNewOfferDispatchToProps}
+export {mapNewOfferToProps, mapNewOfferDispatchToProps, mapViewOfferToProps}

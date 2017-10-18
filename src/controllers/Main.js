@@ -4,21 +4,20 @@ import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
 import {MuiThemeProvider} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
 import {viewPath} from 'utils/Common'
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
-import reducer from "../redux/reducers"
 import DonationRouter from './DonationRouter'
 import theme from '../assets/theme'
 import FbUtils from 'utils/FbUtils'
-
-const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
+import {loadedLibrary} from "../redux/actions";
+import {connect} from 'react-redux'
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      failedToGetUserId: false
+      failedToGetUserId: false,
+      extLoaded: false,
+      sdkLoaded: false
     };
     this.onGetUserIdSuccess = this.onGetUserIdSuccess.bind(this);
     this.onGetUserIdFailure = this.onGetUserIdFailure.bind(this)
@@ -34,32 +33,77 @@ class App extends Component {
 
   componentWillMount() {
     window.viewPath = viewPath;
-    console.log("injectig fb lib");
+    let props = this.props;
+    console.log("injecting fb libs", this.props);
+
     window.extAsyncInit = () => {
-      console.log("lib is inj");
+      console.log("extensions injected");
+      props.loadedLibrary("ext");
       FbUtils.getUserId(this.onGetUserIdSuccess, this.onGetUserIdFailure)
     };
-    FbUtils.injectFbLibrary()
+    window.fbAsyncInit = function () {
+      console.log("app id", window.APP_ID);
+
+      FB.Event.subscribe("auth.statusChange", (response) => {
+        console.log("LOGIN RESP", response);
+      });
+
+      FB.init({
+        appId: window.APP_ID,
+        status: true,
+        autoLogAppEvents: true,
+        xfbml: false,
+        version: 'v2.10'
+      });
+      console.log("sdk injected");
+
+      // console.log("LOGIN TEST")
+      // FB.getLoginStatus(function(response) {
+      //   console.log("LOGIN RESP", response);
+      // window.AT = response.authResponse.accessToken
+
+      // if (response.status == "connected") {
+      //   FB.logout((r) => console.log("logged out", r))
+      // }
+      // props.loadedLibrary("sdk")
+      // });
+
+
+      console.log("right before login");
+      FB.login((r) => console.log("logged in", r))
+
+
+    };
+
+    FbUtils.injectFbLibraries()
   }
 
   render() {
-    let donationPath = viewPath("/donation");
-    console.log("app with paths", donationPath);
     return (
-      <Provider store={store}>
         <MuiThemeProvider theme={theme}>
           <Router>
-            <View id="app-container">
-              {this.state.failedToGetUserId && <Redirect to={viewPath("/fallback")}/>}
-              <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
-              <Route path={viewPath("/donation")} component={DonationRouter}/>
-            </View>
+            <MainView shouldFallback={this.state.failedToGetUserId}/>
           </Router>
         </MuiThemeProvider>
-      </Provider>
     );
   }
 }
 
+function MainView(props) {
+  return (
+    <View id="app-container">
+      {props.shouldFallback && <Redirect to={viewPath("/fallback")}/>}
+      <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
+      <Route path={viewPath("/donation")} component={DonationRouter}/>
+    </View>
+  )
+}
 
-export default App;
+
+export default connect((state, ownProps) => (ownProps), (d) => {
+  return {
+    loadedLibrary: which => {
+      d(loadedLibrary(which))
+    }
+  }
+})(App);
