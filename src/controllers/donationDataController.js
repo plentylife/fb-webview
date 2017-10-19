@@ -5,9 +5,8 @@ function mapNewOfferToProps(state, ownProps) {
 }
 
 function mapViewOfferToProps(state, ownProps) {
-  let loadedSdk = state.loadState.includes("sdk");
   console.log("view offer to props", ownProps);
-  return Object.assign({}, {shouldLoad: loadedSdk}, ownProps)
+  return Object.assign({}, ownProps)
 }
 
 const alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";

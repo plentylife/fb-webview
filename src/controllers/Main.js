@@ -41,39 +41,6 @@ class App extends Component {
       props.loadedLibrary("ext");
       FbUtils.getUserId(this.onGetUserIdSuccess, this.onGetUserIdFailure)
     };
-    window.fbAsyncInit = function () {
-      console.log("app id", window.APP_ID);
-
-      FB.Event.subscribe("auth.statusChange", (response) => {
-        console.log("LOGIN RESP", response);
-      });
-
-      FB.init({
-        appId: window.APP_ID,
-        status: true,
-        autoLogAppEvents: true,
-        xfbml: false,
-        version: 'v2.10'
-      });
-      console.log("sdk injected");
-
-      // console.log("LOGIN TEST")
-      // FB.getLoginStatus(function(response) {
-      //   console.log("LOGIN RESP", response);
-      // window.AT = response.authResponse.accessToken
-
-      // if (response.status == "connected") {
-      //   FB.logout((r) => console.log("logged out", r))
-      // }
-      // props.loadedLibrary("sdk")
-      // });
-
-
-      console.log("right before login");
-      FB.login((r) => console.log("logged in", r))
-
-
-    };
 
     FbUtils.injectFbLibraries()
   }

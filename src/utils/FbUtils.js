@@ -41,31 +41,6 @@ export default class FbUtils {
     });
   }
 
-  static getPostContents(id) {
-    return new Promise(function (resolve, reject) {
-      try {
-        console.log("FB", id, FB);
-        FB.api(id, 'get', {
-          access_token: window.AT
-        }, function (resp) {
-          console.log("getPostContents response", resp);
-
-          if (!resp || resp.error) {
-            let error = resp.error ? resp.error.message : "unknown error";
-            reject(error)
-          } else {
-            resolve(resp.message)
-          }
-
-        })
-      } catch (e) {
-        console.log("js error", e);
-        reject("javascript error")
-      }
-    })
-  }
-
-
   share() {
     let messageToShare = {
       "attachment": {

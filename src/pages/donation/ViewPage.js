@@ -7,32 +7,36 @@ import {mapViewOfferToProps} from '../../controllers/donationDataController'
 import Paper from 'material-ui/Paper';
 import Error from 'templates/ErrorTemplates'
 import styles from './styles'
-import FbUtils from 'utils/FbUtils'
+import ServerComms from 'utils/ServerComms'
 
 class ViewPage extends Component {
   constructor(props) {
     super(props);
 
-    console.log("view page const");
+    console.log("view page const", props);
     this.state = {
-      loaded: false,
       error: "",
       rawMessage: ""
-    }
+    };
+
+    this.getData(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("view page willrecprops", nextProps, this.props);
+    this.getData(nextProps)
+  }
 
-    if (nextProps.shouldLoad && !this.state.loaded && this.props.match.params.id) {
+  getData(props) {
+    if (props.match.params.id) {
       console.log("view mount");
-      FbUtils.getPostContents(this.props.match.params.id).then(contents => {
+      ServerComms.getPost(props.match.params.id).then(contents => {
         console.log("gont contents", contents);
-        this.setState({loaded: true})
       }).catch(e => {
         console.log("Could not display offer:", e);
         this.setState({error: "oops, we're not able to show you this offer..."})
       })
+    } else {
+      this.setState({error: "oops, we're not able to show you this offer..."})
     }
   }
 
