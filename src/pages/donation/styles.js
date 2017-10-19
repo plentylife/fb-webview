@@ -62,6 +62,16 @@ const styles = theme => {
     },
     nested: {
       paddingLeft: theme.spacing.unit * 4,
+    },
+
+    controlPanelContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingTop: '1em'
+    },
+    noUnderline: {
+      textDecoration: 'none'
     }
   }
 };

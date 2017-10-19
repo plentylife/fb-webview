@@ -15,7 +15,13 @@ import styles from './styles'
 import ServerComms from 'utils/ServerComms'
 import TokenView from './TokenView'
 import Comments from "./Comments";
+import BidDash from "./BidDash";
+// fixme mobile will fail
+import {Link} from "react-router-dom";
+import {viewPath} from "../../utils/Common";
+import {Button, Typography} from "material-ui";
 
+'utils/Common';
 class ViewPage extends Component {
   constructor(props) {
     super(props);
@@ -58,6 +64,12 @@ class ViewPage extends Component {
     let classes = this.props.classes;
     return (
       <ContentTemplate title="Viewing an offer">
+        <View className={classes.controlPanelContainer}>
+          <BidDash/>
+          <Link to={viewPath("/donation/create")}>
+            <Typography>Earn by</Typography>
+            <Button>getting rid of stuff</Button></Link>
+        </View>
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
           <TokenView tokens={this.state.tokens}/>

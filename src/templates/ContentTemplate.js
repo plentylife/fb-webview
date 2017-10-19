@@ -8,7 +8,7 @@ import SearchBar from 'pages/SearchBar'
 export default function ContentTemplate(props) {
   return (
     <View>
-      <AppBar position="static">
+      <AppBar position="static" color="default">
         <Toolbar style={{display: 'flex', justifyContent: 'space-around'}}>
           <Typography type="title" color="inherit">
             {props.title}
