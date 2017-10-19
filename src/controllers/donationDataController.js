@@ -70,7 +70,6 @@ function selectTokensBasedOnContext(tokens) {
   let selectorIndexes = [];
   let st = [...tokens];
   for (let i = 0; i < tokens.length; i++) {
-    console.log("`" + tokens[i].token.trim() + "`", tokens[i].token == "__");
     if (tokens[i].token.trim() === "__") {
       selectorIndexes.push(i)
     }

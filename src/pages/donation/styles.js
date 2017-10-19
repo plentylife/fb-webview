@@ -59,6 +59,9 @@ const styles = theme => {
     },
     fullWidth: {
       width: '100%'
+    },
+    nested: {
+      paddingLeft: theme.spacing.unit * 4,
     }
   }
 };

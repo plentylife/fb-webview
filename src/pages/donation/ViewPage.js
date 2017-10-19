@@ -14,6 +14,7 @@ import Error from 'templates/ErrorTemplates'
 import styles from './styles'
 import ServerComms from 'utils/ServerComms'
 import TokenView from './TokenView'
+import Comments from "./Comments";
 
 class ViewPage extends Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class ViewPage extends Component {
           <TokenView tokens={this.state.tokens}/>
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
-
+          <Comments comments={this.state.comments}/>
         </Paper>
       </ContentTemplate>
     );
