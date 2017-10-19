@@ -6,7 +6,6 @@ import {createStore} from 'redux'
 import reducer from "redux/reducers"
 
 // process.env.NODE_ENV = 'production';
-window.document.write("the error");
 
 const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
 
