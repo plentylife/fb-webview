@@ -3,11 +3,17 @@ import {withStyles} from 'material-ui/styles';
 import {View} from 'react-native';
 import ContentTemplate from '../../templates/ContentTemplate'
 import {connect} from 'react-redux'
-import {mapViewOfferToProps} from '../../controllers/donationDataController'
+import {
+  mapViewOfferToProps,
+  selectTokensBasedOnContext,
+  splitStrIntoTokens,
+  stripNonBodyFromPost
+} from '../../controllers/donationDataController'
 import Paper from 'material-ui/Paper';
 import Error from 'templates/ErrorTemplates'
 import styles from './styles'
 import ServerComms from 'utils/ServerComms'
+import TokenView from './TokenView'
 
 class ViewPage extends Component {
   constructor(props) {
@@ -16,21 +22,28 @@ class ViewPage extends Component {
     console.log("view page const", props);
     this.state = {
       error: "",
-      rawMessage: ""
+      tokens: [],
+      comments: []
     };
 
     this.getData(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getData(nextProps)
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.getData(nextProps)
+    }
   }
 
   getData(props) {
     if (props.match.params.id) {
       console.log("view mount");
       ServerComms.getPost(props.match.params.id).then(contents => {
-        console.log("gont contents", contents);
+        let body = stripNonBodyFromPost(contents.body);
+        let tokens = splitStrIntoTokens(body);
+        tokens = selectTokensBasedOnContext(tokens);
+        console.log("view", tokens, body);
+        this.setState({tokens: tokens, comments: contents.comments})
       }).catch(e => {
         console.log("Could not display offer:", e);
         this.setState({error: "oops, we're not able to show you this offer..."})
@@ -46,6 +59,10 @@ class ViewPage extends Component {
       <ContentTemplate title="Viewing an offer">
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
+          <TokenView tokens={this.state.tokens}/>
+        </Paper>
+        <Paper component={View} elevation={2} className={classes.paper}>
+
         </Paper>
       </ContentTemplate>
     );
