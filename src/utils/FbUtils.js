@@ -34,10 +34,9 @@ export default class FbUtils {
   // fixme rename
   static getUserId(onSuccess, onFail) {
     MessengerExtensions.getContext(window.APP_ID, (context) => {
-      console.log("setting signdned request", context, context.signed_request);
-      ServerComms.signedRequest = context.signed_request
-    }, (e, m) => {
-      onFail(e, m)
+      ServerComms.sRequestResolve(context.signed_request)
+    }, (e) => {
+      ServerComms.sRequestReject(e)
     });
   }
 

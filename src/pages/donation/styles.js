@@ -68,10 +68,18 @@ const styles = theme => {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',
-      paddingTop: '1em'
+      paddingTop: '1em',
+      alignItems: "center"
     },
     noUnderline: {
       textDecoration: 'none'
+    },
+
+    innerBidPanel: {
+      margin: '1em'
+    },
+    outerBidPanel: {
+      padding: '1em'
     }
   }
 };

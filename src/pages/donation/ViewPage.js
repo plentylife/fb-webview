@@ -20,8 +20,8 @@ import BidDash from "./BidDash";
 import {Link} from "react-router-dom";
 import {viewPath} from "../../utils/Common";
 import {Button, Typography} from "material-ui";
+import {Tenge} from 'utils/Common'
 
-'utils/Common';
 class ViewPage extends Component {
   constructor(props) {
     super(props);
@@ -65,9 +65,9 @@ class ViewPage extends Component {
     return (
       <ContentTemplate title="Viewing an offer">
         <View className={classes.controlPanelContainer}>
-          <BidDash/>
+          <BidDash id={this.props.match.params.id}/>
           <Link to={viewPath("/donation/create")}>
-            <Typography>Earn by</Typography>
+            <Typography>Earn {Tenge}hanks by</Typography>
             <Button>getting rid of stuff</Button></Link>
         </View>
         <Paper component={View} elevation={2} className={classes.paper}>
