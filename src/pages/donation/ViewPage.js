@@ -30,7 +30,8 @@ class ViewPage extends Component {
     this.state = {
       error: "",
       tokens: [],
-      comments: []
+      comments: [],
+      commentsLink: "m.me/" + props.match.params.id
     };
 
     this.getData(this.props)
@@ -75,7 +76,16 @@ class ViewPage extends Component {
           <TokenView tokens={this.state.tokens}/>
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
-          <Comments comments={this.state.comments}/>
+          <View className={classes.commentLinksContainer}>
+            <Link to={this.state.commentsLink} className={classes.noUnderline}>
+              <Button raised color="primary">Add Picture</Button>
+            </Link>
+            <Link to={this.state.commentsLink} className={classes.noUnderline}>
+              <Button raised color="primary">Add Comment</Button>
+            </Link>
+          </View>
+          {this.state.comments.length > 0 && <Comments comments={this.state.comments}/>}
+          {this.state.comments.length === 0 && <Typography>No comments yet... leave one</Typography>}
         </Paper>
       </ContentTemplate>
     );

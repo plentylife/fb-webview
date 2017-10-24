@@ -14,7 +14,6 @@ function Comments(props) {
   return (
     <List>
       {comments.map(function (c, i) {
-        console.log(c);
         let date = new Date(c.date);
         return (
           [<ListItem key="parent" className={props.isNested ? props.classes.nested : ""}>

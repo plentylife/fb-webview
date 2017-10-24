@@ -74,7 +74,11 @@ class CreateDonationPages extends Component {
       this.setState({error: "You must select at least " + this.minTags + " tag"});
     } else {
       this.setState({error: ""});
-      Server.postNewDonation(this.props.tokens)
+      Server.postNewDonation(this.props.tokens).then(d => {
+        this.props.history.replace(viewPath("/donation/" + d.id))
+      }).catch(e => {
+        this.setState({error: "We couldn't post your donation, oops..."})
+      })
     }
   }
 

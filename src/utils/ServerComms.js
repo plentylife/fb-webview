@@ -25,17 +25,8 @@ export default class ServerComms {
     });
   }
 
-  static postNewDonation(description, onSuccess, onFailure) {
-    ServerComms.generateBody(description).then(b => {
-      fetch(backPath("/donation"), {method: 'POST', body: b}).then(resp => {
-          // should get back the new donation id
-          console.log("got response");
-          onSuccess(resp)
-        }
-      ).catch(e => {
-        onFailure(e)
-      })
-    })
+  static postNewDonation(description) {
+    return ServerComms.fetchSimple(description, "/donation", false)
   }
 
   static getPost(id) {

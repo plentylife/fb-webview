@@ -74,6 +74,13 @@ const styles = theme => {
     noUnderline: {
       textDecoration: 'none'
     },
+    commentLinksContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: "center",
+      width: '100%'
+    },
 
     innerBidPanel: {
       margin: '1em'

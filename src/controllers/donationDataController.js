@@ -70,19 +70,24 @@ function selectTokensBasedOnContext(tokens) {
   let selectorIndexes = [];
   let st = [...tokens];
   for (let i = 0; i < tokens.length; i++) {
-    if (tokens[i].token.trim() === "__") {
+    if (tokens[i].token.trim().includes("__")) {
       selectorIndexes.push(i)
     }
   }
-  console.log("selectors", selectorIndexes);
   for (let i = 0; i < selectorIndexes.length - 1; i++) {
     if (selectorIndexes[i + 1] - selectorIndexes[i] === 2) {
-      st[selectorIndexes[i] + 1] = Object.assign({}, st[selectorIndexes[i] + 1], {isTagged: true});
-      st[selectorIndexes[i]] = null;
-      st[selectorIndexes[i + 1]] = null
+      let frontSelector = st[selectorIndexes[i]].token;
+      let backSelector = st[selectorIndexes[i + 1]].token;
+      if (frontSelector.slice(frontSelector.length - 2, frontSelector.length) === "__" &&
+        backSelector.slice(0, 2) === "__") {
+        st[selectorIndexes[i] + 1] = Object.assign({}, st[selectorIndexes[i] + 1], {isTagged: true});
+        st[selectorIndexes[i]] = Object.assign({}, st[selectorIndexes[i]], {token: frontSelector.slice(0, frontSelector.length - 2)});
+        st[selectorIndexes[i + 1]] = Object.assign({}, st[selectorIndexes[i + 1]], {token: backSelector.slice(2, backSelector.length)});
+        // console.log(st[selectorIndexes[i]], st[selectorIndexes[i + 1]])
+      }
     }
   }
-  return st.filter(e => (e !== null))
+  return st.filter(e => (e !== null || e.length > 0))
 }
 
 function stripNonBodyFromPost(postBody) {
