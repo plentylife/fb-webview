@@ -75,6 +75,7 @@ const styles = theme => {
       textDecoration: 'none'
     },
     commentLinksContainer: {
+      marginBottom: '0.3em',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',

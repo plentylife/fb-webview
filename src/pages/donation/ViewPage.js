@@ -31,7 +31,7 @@ class ViewPage extends Component {
       error: "",
       tokens: [],
       comments: [],
-      commentsLink: "m.me/" + props.match.params.id
+      commentsLink: "https://facebook.com/" + props.match.params.id
     };
 
     this.getData(this.props)
@@ -77,12 +77,13 @@ class ViewPage extends Component {
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
           <View className={classes.commentLinksContainer}>
-            <Link to={this.state.commentsLink} className={classes.noUnderline}>
+            {/* fixme will fail on mobile */}
+            <a target="_blank" href={this.state.commentsLink} className={classes.noUnderline}>
               <Button raised color="primary">Add Picture</Button>
-            </Link>
-            <Link to={this.state.commentsLink} className={classes.noUnderline}>
+            </a>
+            <a target="_blank" href={this.state.commentsLink} className={classes.noUnderline}>
               <Button raised color="primary">Add Comment</Button>
-            </Link>
+            </a>
           </View>
           {this.state.comments.length > 0 && <Comments comments={this.state.comments}/>}
           {this.state.comments.length === 0 && <Typography>No comments yet... leave one</Typography>}
