@@ -21,7 +21,9 @@ class Dash extends Component {
       highestBid: null,
       hba: 0,
       hbb: null,
-      minBid: 1
+      minBid: 1,
+      accountBalance: null,
+      daysToExpiry: null
     };
 
     ServerComms.getHighestBid(props.id).then(b => {
@@ -33,6 +35,12 @@ class Dash extends Component {
       }
     });
 
+    ServerComms.getAccountStatus().then(b => {
+      let dte = Math.round(b.timeUntilNextDemurrage / 1000 / 60 / 60 / 24);
+      console.log("account status", b, dte);
+      this.setState({accountBalance: b.balance, daysToExpiry: dte})
+    });
+
     this.onBidPress = this.onBidPress.bind(this)
   }
 
@@ -41,11 +49,13 @@ class Dash extends Component {
   }
 
   render() {
+    console.log("dash render", this.state);
     return (
       <View className={this.props.classes.view}>
         {this.state.expanded && <Panel highestBidAmount={this.state.hba}
                                        highestBidBy={this.state.hbb}
                                        minBid={this.state.minBid}
+                                       balance={this.state.accountBalance} expiry={this.state.daysToExpiry}
                                        id={this.props.id}/>}
         {!this.state.expanded && <BidButton onPress={this.onBidPress}/>}
       </View>
@@ -66,7 +76,10 @@ class PanelComp extends Component {
   }
 
   onBidPress() {
-    ServerComms.sendBidToServer(this.props.id, this.state.userBid)
+    this.verifyBid(this.state.userBid);
+    {
+      ServerComms.sendBidToServer(this.props.id, this.state.userBid ? this.state.userBid : this.props.minBid)
+    }
   };
 
   onBidChange(e) {
@@ -81,10 +94,12 @@ class PanelComp extends Component {
   }
 
   render() {
+    console.log("panel render", this.props);
     return (
       <Paper className={this.props.classes.outerBidPanel}>
         <View className={this.props.classes.innerBidPanel}>
-          <Typography>You have 0 {Tenge}hanks</Typography>
+          <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
+          <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
           {this.props.highestBidBy &&
           <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
           <TextField type='number' value={this.state.userBid ? this.state.userBid : this.props.minBid}

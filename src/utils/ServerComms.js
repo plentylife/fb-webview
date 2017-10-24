@@ -75,7 +75,19 @@ export default class ServerComms {
     return ServerComms.generateBody({amount: amount}).then(b => {
       console.log("bid body", b);
       return fetch(backPath("/donation/" + donationId), {method: "PUT", body: b}).then(resp => {
-        ServerComms.toJsonOrReject(resp)
+        return ServerComms.toJsonOrReject(resp)
+      })
+    })
+  }
+
+  static getAccountStatus() {
+    return ServerComms.fetchSimple("", "/account", /* isPut */false)
+  }
+
+  static fetchSimple(payload, path, isPut) {
+    return ServerComms.generateBody(payload).then(b => {
+      return fetch(backPath(path), {method: isPut ? "PUT" : "POST", body: b}).then(resp => {
+        return ServerComms.toJsonOrReject(resp)
       })
     })
   }
