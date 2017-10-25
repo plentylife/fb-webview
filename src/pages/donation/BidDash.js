@@ -18,7 +18,7 @@ class Dash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: true,
+      expanded: false,
       highestBid: null,
       hba: 0,
       hbb: null,
@@ -126,20 +126,20 @@ class PanelComp extends Component {
   }
 
   render() {
-    console.log("panel render", this.props);
+    console.log("panel render", this.state);
     return (
       <Paper className={this.props.classes.outerBidPanel}>
         <Error error={this.state.error}/>
         <View className={this.props.classes.innerBidPanel}>
+
           <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
           <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
           {this.props.highestBidBy &&
           <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
           <TextField type='number' value={this.getUserBid()} onChange={this.onBidChange}
-                     helperText="no decimals" label={"how" +
-          " many " + Tenge + "hanks would you" +
-          " like to bid?"}/>
-          <BidButton onPress={this.onBidPress} disabled={!this.state.buttonDisabled}/>
+                     helperText="no decimals" label={"how many do you bid?"}
+                     className={this.props.classes.bidField} autoFocus={true}/>
+          <BidButton onPress={this.onBidPress} disabled={this.state.buttonDisabled}/>
         </View>
       </Paper>
     )
@@ -152,7 +152,7 @@ function BidButtonComp(props) {
   return (
     <TouchableWithoutFeedback onPress={props.onPress}>
       <View>
-      <Button color="primary" raised className={props.classes.button}>Bid</Button>
+        <Button color="primary" raised className={props.classes.button} disabled={props.disabled}>Bid</Button>
       </View>
     </TouchableWithoutFeedback>
   )

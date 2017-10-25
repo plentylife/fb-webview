@@ -69,7 +69,8 @@ const styles = theme => {
       flexDirection: 'row',
       justifyContent: 'space-around',
       paddingTop: '1em',
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: 'wrap'
     },
     noUnderline: {
       textDecoration: 'none'
@@ -87,7 +88,12 @@ const styles = theme => {
       margin: '1em'
     },
     outerBidPanel: {
-      padding: '1em'
+      padding: '1em',
+      marginBottom: '0.5em'
+    },
+    bidField: {
+      marginTop: '0.3em',
+      marginBottom: '0.3em',
     }
   }
 };
