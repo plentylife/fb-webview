@@ -79,10 +79,7 @@ class ViewPage extends Component {
           <View className={classes.commentLinksContainer}>
             {/* fixme will fail on mobile */}
             <a target="_blank" href={this.state.commentsLink} className={classes.noUnderline}>
-              <Button raised color="primary">Add Picture</Button>
-            </a>
-            <a target="_blank" href={this.state.commentsLink} className={classes.noUnderline}>
-              <Button raised color="primary">Add Comment</Button>
+              <Button raised color="primary">Add Comment or Picture</Button>
             </a>
           </View>
           {this.state.comments.length > 0 && <Comments comments={this.state.comments}/>}
