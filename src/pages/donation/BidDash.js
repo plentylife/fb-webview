@@ -6,6 +6,7 @@ import {Paper, TextField, Typography} from "material-ui";
 import donationStyles from './styles'
 import {Tenge} from 'utils/Common'
 import ServerComms from "utils/ServerComms";
+import Error from 'templates/ErrorTemplates'
 
 const styles = {
   view: {paddingTop: 5, display: 'flex', justifyContent: 'space-around', flexDirection: 'row'},
@@ -21,6 +22,7 @@ class Dash extends Component {
       highestBid: null,
       hba: 0,
       hbb: null,
+      hbbi: null,
       minBid: 1,
       accountBalance: null,
       daysToExpiry: null
@@ -31,7 +33,7 @@ class Dash extends Component {
       if (b) {
         let hba = b.bid.amount;
         let hbb = b.info.name;
-        this.setState({highestBid: b, hba: hba, hbb: hbb, minBid: hba + 1})
+        this.setState({highestBid: b, hba: hba, hbb: hbb, hbbi: b.bid.by, minBid: hba + 1})
       }
     });
 
@@ -54,6 +56,7 @@ class Dash extends Component {
       <View className={this.props.classes.view}>
         {this.state.expanded && <Panel highestBidAmount={this.state.hba}
                                        highestBidBy={this.state.hbb}
+                                       highestBidById={this.state.hbbi}
                                        minBid={this.state.minBid}
                                        balance={this.state.accountBalance} expiry={this.state.daysToExpiry}
                                        id={this.props.id}/>}
@@ -68,45 +71,75 @@ class PanelComp extends Component {
     super(props);
 
     this.state = {
-      userBid: null
+      userBid: null,
+      error: null,
+      buttonDisabled: false
     };
 
     this.onBidPress = this.onBidPress.bind(this);
-    this.onBidChange = this.onBidChange.bind(this)
+    this.onBidChange = this.onBidChange.bind(this);
+    this.getUserBid = this.getUserBid.bind(this)
   }
 
   onBidPress() {
-    this.verifyBid(this.state.userBid);
+    this.verifyBid(this.getUserBid());
     {
-      ServerComms.sendBidToServer(this.props.id, this.state.userBid ? this.state.userBid : this.props.minBid)
+      ServerComms.sendBidToServer(this.props.id, this.getUserBid()).catch(e => {
+        this.setState({error: "oops... something went wrong"})
+      })
     }
   };
 
   onBidChange(e) {
-    let newBid = e.target.value();
-    if (this.verifyBid(newBid)) {
-      this.setState({userBid: newBid})
-    }
+    // console.log("bid change", e, e.target, e.target.value)
+    let newBid = e.target.value;
+    this.setState({userBid: newBid});
+    this.verifyBid(newBid)
   }
 
   verifyBid(value) {
-    return true
+    let aboveMin = (value >= this.props.minBid);
+    let belowBalance = (value <= this.props.balance);
+    let whole = value % 1 === 0;
+    // let notSelf = this.props.highestBidById !== FbUtils.userId
+
+    this.setState({error: "", buttonDisabled: false});
+    if (!aboveMin) {
+      this.setState({error: "Bid must be higher than minimum", buttonDisabled: true})
+    }
+    if (!belowBalance) {
+      this.setState({error: "Not enough funds", buttonDisabled: true})
+    }
+    if (!whole) {
+      this.setState({error: "Has to be a round number", buttonDisabled: true})
+    }
+
+    return (aboveMin && belowBalance && whole)
+  }
+
+  getUserBid() {
+    if (this.state.userBid !== null) {
+      return this.state.userBid
+    } else {
+      return this.props.minBid
+    }
   }
 
   render() {
     console.log("panel render", this.props);
     return (
       <Paper className={this.props.classes.outerBidPanel}>
+        <Error error={this.state.error}/>
         <View className={this.props.classes.innerBidPanel}>
           <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
           <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
           {this.props.highestBidBy &&
           <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
-          <TextField type='number' value={this.state.userBid ? this.state.userBid : this.props.minBid}
+          <TextField type='number' value={this.getUserBid()} onChange={this.onBidChange}
                      helperText="no decimals" label={"how" +
           " many " + Tenge + "hanks would you" +
           " like to bid?"}/>
-          <BidButton onPress={this.onBidPress} onChange={this.onBidChange}/>
+          <BidButton onPress={this.onBidPress} disabled={!this.state.buttonDisabled}/>
         </View>
       </Paper>
     )

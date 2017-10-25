@@ -39,7 +39,7 @@ class App extends Component {
     window.extAsyncInit = () => {
       console.log("extensions injected");
       props.loadedLibrary("ext");
-      FbUtils.getUserId(this.onGetUserIdSuccess, this.onGetUserIdFailure)
+      FbUtils.setContextVariables(this.onGetUserIdSuccess, this.onGetUserIdFailure)
     };
 
     FbUtils.injectFbLibraries()

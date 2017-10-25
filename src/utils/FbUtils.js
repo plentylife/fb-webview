@@ -3,6 +3,8 @@
 import ServerComms from './ServerComms'
 
 export default class FbUtils {
+  static userId;
+
   static injectFbLibraries() {
     (function (d, s, id) {
       let js, fjs = d.getElementsByTagName(s)[0];
@@ -32,9 +34,11 @@ export default class FbUtils {
    * @param onFail, function that is executed if getting user id failed. Should happen only on outdated or web clients.
    */
   // fixme rename
-  static getUserId(onSuccess, onFail) {
+  static setContextVariables(onSuccess, onFail) {
     MessengerExtensions.getContext(window.APP_ID, (context) => {
-      ServerComms.sRequestResolve(context.signed_request)
+      console.log("context", context);
+      ServerComms.sRequestResolve(context.signed_request);
+      FbUtils.userId = context.psid
     }, (e) => {
       ServerComms.sRequestReject(e)
     });
