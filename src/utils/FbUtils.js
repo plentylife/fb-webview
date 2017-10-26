@@ -1,6 +1,7 @@
 /* global MessengerExtensions */
 
 import ServerComms from './ServerComms'
+import {globalViewPath} from "./Common";
 
 export default class FbUtils {
   static userId;
@@ -44,26 +45,39 @@ export default class FbUtils {
     });
   }
 
-  share() {
+  static tokensToTitle(tokens) {
+    console.log("to tilte", tokens);
+    let title = 'Tagged with:';
+    tokens.forEach(t => {
+      if (t.isTagged) {
+        title += " " + t.token
+      }
+    });
+    return title
+  }
+
+  static share(donationId, tokens) {
     let messageToShare = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": "Testing webview",
+            "title": FbUtils.tokensToTitle(tokens),
+            "image_url": globalViewPath("/resources/plenty_fb_header.png"),
+            // "subtitle": "",
             "default_action": {
               "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url": "https://plenty.life/webview"
+              "url": globalViewPath("/donation/" + donationId)
             },
             "buttons": [{
               "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url": "https://plenty.life/webview",
-              "title": "Test"
+              "url": globalViewPath("/donation/" + donationId),
+              "title": "View"
             }]
           }]
         }

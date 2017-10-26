@@ -75,6 +75,9 @@ const styles = theme => {
     noUnderline: {
       textDecoration: 'none'
     },
+    withUnderline: {
+      textDecoration: 'underline'
+    },
     commentLinksContainer: {
       marginBottom: '0.3em',
       display: 'flex',

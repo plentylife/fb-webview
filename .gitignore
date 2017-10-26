@@ -8,3 +8,4 @@ package-lock.json
 /webview/**/manifest.js
 /webview/**/poly.js
 /webview/**/fetch.js
+*.png

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import {View} from 'react-native';
+import {TouchableWithoutFeedback, View} from 'react-native';
 import ContentTemplate from '../../templates/ContentTemplate'
 import {connect} from 'react-redux'
 import {
@@ -21,6 +21,7 @@ import {Link} from "react-router-dom";
 import {viewPath} from "../../utils/Common";
 import {Button, Typography} from "material-ui";
 import {Tenge} from 'utils/Common'
+import FbUtils from "../../utils/FbUtils";
 
 class ViewPage extends Component {
   constructor(props) {
@@ -67,9 +68,18 @@ class ViewPage extends Component {
       <ContentTemplate title="Viewing an offer">
         <View className={classes.controlPanelContainer}>
           <BidDash id={this.props.match.params.id}/>
-          <Link to={viewPath("/donation/create")}>
-            <Typography>Earn {Tenge}hanks by</Typography>
-            <Button>getting rid of stuff</Button></Link>
+          <View>
+            <Typography>Earn {Tenge}hanks by </Typography>
+            <Link to={viewPath("/donation/create")}>
+              <Button>getting rid of stuff</Button></Link>
+
+            <TouchableWithoutFeedback onPress={() => FbUtils.share(this.props.match.params.id, this.state.tokens)}>
+              <View>
+                <Button className={classes.withUnderline}>sharing</Button>
+              </View>
+            </TouchableWithoutFeedback>
+
+          </View>
         </View>
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>

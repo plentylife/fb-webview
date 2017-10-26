@@ -39,7 +39,16 @@ class App extends Component {
     window.extAsyncInit = () => {
       console.log("extensions injected");
       props.loadedLibrary("ext");
-      FbUtils.setContextVariables(this.onGetUserIdSuccess, this.onGetUserIdFailure)
+      FbUtils.setContextVariables(this.onGetUserIdSuccess, this.onGetUserIdFailure);
+
+      MessengerExtensions.getSupportedFeatures(function success(result) {
+        let features = result.supported_features;
+        console.log("fb supported", features, result)
+      }, function error(err) {
+        console.log("fb supported error", err)
+        // error retrieving supported features
+      });
+
     };
 
     FbUtils.injectFbLibraries()
