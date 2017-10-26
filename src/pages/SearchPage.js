@@ -14,7 +14,7 @@ class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
+      error: "",
       items: null,
       search: SearchPage.getQuery(props)
     };
@@ -23,9 +23,9 @@ class SearchPage extends Component {
   }
 
   // componentWillReceiveProps(nextProps) {
-  // if (nextProps.match.params.q != this.props.match.params.q) {
+  //   if (nextProps.match.params.q != this.props.match.params.q) {
   //
-  // }
+  //   }
   // }
 
   static getQuery(props) {
@@ -35,10 +35,14 @@ class SearchPage extends Component {
 
   update(props) {
     ServerComms.search(SearchPage.getQuery(props)).then(res => {
-      console.log(res)
-      // items = res
+      console.log(res);
+      let items = res.map(d => {
+        let tagged = d.description.filter(t => (t.isTagged));
+        return {id: d.id, tokens: tagged}
+      });
+      this.setState({items: items})
     }).catch(e => {
-      error = "oops... could not get results"
+      this.setState({error: "oops... could not get results"})
     })
   }
 
@@ -48,7 +52,10 @@ class SearchPage extends Component {
 
         <View>
           <Error error={this.state.error}/>
-          <SearchItem></SearchItem>
+          {this.state.items && this.state.items.map(i => {
+            return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}></SearchItem>)
+          })}
+
         </View>
       </ContentTemplate>
     )
@@ -57,9 +64,10 @@ class SearchPage extends Component {
 }
 
 function SearchItem(props) {
+  let descr = props.tokens.map(t => (t.token)).join(' , ');
   return (
     <Paper>
-      <Typography>item</Typography>
+      <Typography>{descr}</Typography>
     </Paper>
   )
 }
