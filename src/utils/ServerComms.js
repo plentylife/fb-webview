@@ -75,6 +75,12 @@ export default class ServerComms {
     return ServerComms.fetchSimple("", "/account", /* isPut */false)
   }
 
+  static search(query) {
+    return fetch(backPath("/search?q=" + encodeURI(query))).then(resp =>
+      (ServerComms.toJsonOrReject(resp))
+    )
+  }
+
   static fetchSimple(payload, path, isPut) {
     return ServerComms.generateBody(payload).then(b => {
       return fetch(backPath(path), {method: isPut ? "PUT" : "POST", body: b}).then(resp => {

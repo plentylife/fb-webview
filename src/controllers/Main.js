@@ -9,6 +9,7 @@ import theme from '../assets/theme'
 import FbUtils from 'utils/FbUtils'
 import {loadedLibrary} from "../redux/actions";
 import {connect} from 'react-redux'
+import SearchPage from 'pages/SearchPage'
 
 class App extends Component {
 
@@ -71,6 +72,7 @@ function MainView(props) {
       {props.shouldFallback && <Redirect to={viewPath("/fallback")}/>}
       <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
       <Route path={viewPath("/donation")} component={DonationRouter}/>
+      <Route path={viewPath("/search")} component={SearchPage}/>
     </View>
   )
 }

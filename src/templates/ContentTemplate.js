@@ -1,7 +1,6 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
 import {ScrollView, View} from 'react-native';
 import SearchBar from 'pages/SearchBar'
 
@@ -10,10 +9,10 @@ export default function ContentTemplate(props) {
     <View>
       <AppBar position="static" color="default">
         <Toolbar style={{display: 'flex', justifyContent: 'space-around'}}>
-          <Typography type="title" color="inherit">
-            {props.title}
-          </Typography>
-          <SearchBar/>
+          {/*<Typography type="title" color="inherit">*/}
+          {/*{props.title}*/}
+          {/*</Typography>*/}
+          <SearchBar search={props.search}/>
         </Toolbar>
       </AppBar>
 
