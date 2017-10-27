@@ -16,11 +16,23 @@ class SearchBar extends Component {
       q: ""
     };
 
-    this.onUpdate = this.onUpdate.bind(this)
+    this.onUpdate = this.onUpdate.bind(this);
+    this.generateUrl = this.generateUrl.bind(this);
+    this.onEnter = this.onEnter.bind(this)
   }
 
   onUpdate(e) {
     this.setState({q: e.target.value})
+  }
+
+  generateUrl() {
+    return viewPath("/search/?q=" + encodeURI(this.state.q))
+  }
+
+  onEnter(e) {
+    if (e.key === 'Enter') {
+      this.props.history.push(this.generateUrl())
+    }
   }
 
   render() {
@@ -28,9 +40,10 @@ class SearchBar extends Component {
       <View className={this.props.classes.container}>
         <TextField placeholder="search" InputClassName={this.props.classes.bar} style={{backgroundColor: 'white'}}
                    onChange={this.onUpdate} defaultValue={this.props.search ? this.props.search : ""}
+                   onKeyPress={this.onEnter}
         />
         {!!this.state.q &&
-        <Link className={this.props.classes.link} to={viewPath("/search/?q=" + encodeURI(this.state.q))}>
+        <Link className={this.props.classes.link} to={this.generateUrl()}>
           <Button className={this.props.classes.button} raised>go</Button>
         </Link>
         }

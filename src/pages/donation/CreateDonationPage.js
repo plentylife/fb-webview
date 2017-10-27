@@ -88,7 +88,7 @@ class CreateDonationPages extends Component {
     console.log("CreateDonationPages render");
     let classes = this.props.classes;
     return (
-      <ContentTemplate title={this.titles[this.state.tagSelectionMode ? 1 : 0]}>
+      <ContentTemplate title={this.titles[this.state.tagSelectionMode ? 1 : 0]} history={this.props.history}>
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
           {(!this.state.tagSelectionMode) && <EnterDescription onNext={this.onNext}/>}

@@ -12,7 +12,7 @@ export default function ContentTemplate(props) {
           {/*<Typography type="title" color="inherit">*/}
           {/*{props.title}*/}
           {/*</Typography>*/}
-          <SearchBar search={props.search}/>
+          <SearchBar search={props.search} history={props.history}/>
         </Toolbar>
       </AppBar>
 

@@ -69,7 +69,7 @@ class ViewPage extends Component {
   render() {
     let classes = this.props.classes;
     return (
-      <Container title="Viewing an offer" inline={this.props.inline}>
+      <Container title="Viewing an offer" inline={this.props.inline} history={this.props.history}>
         <View className={classes.controlPanelContainer}>
           <BidDash id={this.getId(this.props)}/>
           <View className={classes.centerItems}>
@@ -110,7 +110,7 @@ function Container(props) {
       {props.children}
     </View>)
   } else {
-    return (<ContentTemplate title={props.title}>
+    return (<ContentTemplate title={props.title} history={props.history}>
       {props.children}
     </ContentTemplate>)
   }

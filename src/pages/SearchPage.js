@@ -43,7 +43,7 @@ class SearchPage extends Component {
         let tagged = d.description.filter(t => (t.isTagged));
         return {id: d.id, tokens: tagged}
       });
-      this.setState({items: items})
+      this.setState({items: items, error: ""})
     }).catch(e => {
       this.setState({error: "oops... could not get results"})
     })
@@ -52,7 +52,7 @@ class SearchPage extends Component {
   render() {
     let c = this.props.classes;
     return (
-      <ContentTemplate title="Search results" search={this.state.search}>
+      <ContentTemplate title="Search results" search={this.state.search} history={this.props.history}>
         <Error error={this.state.error}/>
 
         <ScrollView className={c.scrollView}>
