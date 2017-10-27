@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import {TouchableWithoutFeedback, View} from "react-native";
@@ -7,6 +7,7 @@ import donationStyles from './styles'
 import {Tenge} from 'utils/Common'
 import ServerComms from "utils/ServerComms";
 import Error from 'templates/ErrorTemplates'
+import classNames from 'classnames'
 
 const styles = {
   view: {paddingTop: 5, display: 'flex', justifyContent: 'space-around', flexDirection: 'row'},
@@ -73,7 +74,8 @@ class PanelComp extends Component {
     this.state = {
       userBid: null,
       error: null,
-      buttonDisabled: false
+      buttonDisabled: false,
+      bidSubmitted: false
     };
 
     this.onBidPress = this.onBidPress.bind(this);
@@ -85,7 +87,9 @@ class PanelComp extends Component {
     // fixme notify user that everything went fine
     this.verifyBid(this.getUserBid());
     {
-      ServerComms.sendBidToServer(this.props.id, this.getUserBid()).catch(e => {
+      ServerComms.sendBidToServer(this.props.id, this.getUserBid()).then(r => {
+        this.setState({bidSubmitted: true})
+      }).catch(e => {
         this.setState({error: "oops... something went wrong"})
       })
     }
@@ -128,25 +132,40 @@ class PanelComp extends Component {
 
   render() {
     console.log("panel render", this.state);
+    let c = this.props.classes;
     return (
-      <Paper className={this.props.classes.outerBidPanel}>
+      <Paper className={classNames(this.props.classes.outerBidPanel, this.state.bidSubmitted ? c.bidSuccess : null)}>
         <Error error={this.state.error}/>
-        <View className={this.props.classes.innerBidPanel}>
-
-          <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
-          <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
-          {this.props.highestBidBy &&
-          <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
-          <TextField type='number' value={this.getUserBid()} onChange={this.onBidChange}
-                     helperText="no decimals" label={"how many do you bid?"}
-                     className={this.props.classes.bidField} autoFocus={true}/>
-          <BidButton onPress={this.onBidPress} disabled={this.state.buttonDisabled}/>
-        </View>
+        {!this.state.bidSubmitted && <BidControls {...this.props} buttonDisabled={this.state.buttonDisabled}
+                                                  getUserBid={this.getUserBid} onBidChange={this.onBidChange}
+                                                  onBidPress={this.onBidPress}/>}
+        {this.state.bidSubmitted && <Typography noWrap={false} className={c.successTypo} align="justify">
+          Your bid is successful. If there are any problems, we will notify you in Messenger.
+        </Typography>}
       </Paper>
     )
   }
 }
 
+class BidControlsComp extends PureComponent {
+  render() {
+    return (
+      <View className={this.props.classes.innerBidPanel}>
+
+        <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
+        <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
+        {this.props.highestBidBy &&
+        <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
+        <TextField type='number' value={this.props.getUserBid()} onChange={this.props.onBidChange}
+                   helperText="no decimals" label={"how many do you bid?"}
+                   className={this.props.classes.bidField} autoFocus={true}/>
+        <BidButton onPress={this.props.onBidPress} disabled={this.props.buttonDisabled}/>
+      </View>
+    )
+  }
+}
+
+const BidControls = withStyles(donationStyles)(BidControlsComp);
 const Panel = withStyles(donationStyles)(PanelComp);
 
 function BidButtonComp(props) {

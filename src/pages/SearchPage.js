@@ -114,7 +114,7 @@ const styles = (t) => ({
   scrollView: {
     paddingTop: t.spacing.unit,
     paddingBottom: t.spacing.unit,
-    padding: t.spacing.unit,
+    // padding: t.spacing.unit,
     width: '100%',
   },
   item: {

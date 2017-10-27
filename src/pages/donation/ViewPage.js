@@ -72,7 +72,7 @@ class ViewPage extends Component {
       <Container title="Viewing an offer" inline={this.props.inline}>
         <View className={classes.controlPanelContainer}>
           <BidDash id={this.getId(this.props)}/>
-          <View>
+          <View className={classes.centerItems}>
             <Typography>Earn {Tenge}hanks by </Typography>
             <Link to={viewPath("/donation/create")}>
               <Button>getting rid of stuff</Button></Link>

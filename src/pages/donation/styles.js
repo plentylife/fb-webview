@@ -1,3 +1,5 @@
+import {lightGreen} from 'material-ui/colors';
+
 const styles = theme => {
   return {
     button: {
@@ -78,6 +80,9 @@ const styles = theme => {
     withUnderline: {
       textDecoration: 'underline'
     },
+    centerItems: {
+      alignItems: 'center'
+    },
     commentLinksContainer: {
       marginBottom: '0.3em',
       display: 'flex',
@@ -97,6 +102,12 @@ const styles = theme => {
     bidField: {
       marginTop: '0.3em',
       marginBottom: '0.3em',
+    },
+    bidSuccess: {
+      backgroundColor: lightGreen['500']
+    },
+    successTypo: {
+      width: 100
     }
   }
 };
