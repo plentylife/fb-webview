@@ -106,6 +106,9 @@ const styles = theme => {
     bidSuccess: {
       backgroundColor: lightGreen['500']
     },
+    waitButton: {
+      backgroundColor: lightGreen['500']
+    },
     successTypo: {
       width: 100
     }

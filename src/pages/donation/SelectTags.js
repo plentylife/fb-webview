@@ -36,7 +36,12 @@ class SelectTags extends Component {
         {/* fixme create a modal indicating loading */}
         <TouchableWithoutFeedback onPress={this.props.onPublish}>
           <View>
-            <Button color="primary" className={classes.button} raised dense>Publish</Button>
+            <Button color="primary"
+                    className={classNames(classes.button, this.props.isPublishing ? classes.waitButton : null)} raised
+                    dense>
+              {!this.props.isPublishing && 'Publish'}
+              {this.props.isPublishing && 'Please wait...'}
+            </Button>
           </View>
         </TouchableWithoutFeedback>
       </View>

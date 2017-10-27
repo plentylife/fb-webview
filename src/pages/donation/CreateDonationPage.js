@@ -16,7 +16,8 @@ class CreateDonationPages extends Component {
     super(props);
     this.state = {
       tagSelectionMode: false,
-      error: ""
+      error: "",
+      isPublishing: false
     };
     this.maxTags = 3;
     this.minTags = 1;
@@ -73,11 +74,12 @@ class CreateDonationPages extends Component {
     if (c < this.minTags) {
       this.setState({error: "You must select at least " + this.minTags + " tag"});
     } else {
-      this.setState({error: ""});
+      this.setState({error: "", isPublishing: true});
       Server.postNewDonation(this.props.tokens).then(d => {
+        this.setState({isPublishing: false});
         this.props.history.replace(viewPath("/donation/" + d.id))
       }).catch(e => {
-        this.setState({error: "We couldn't post your donation, oops..."})
+        this.setState({error: "We couldn't post your donation, oops...", isPublishing: false})
       })
     }
   }
@@ -91,7 +93,8 @@ class CreateDonationPages extends Component {
           <Error error={this.state.error}/>
           {(!this.state.tagSelectionMode) && <EnterDescription onNext={this.onNext}/>}
           {(this.state.tagSelectionMode) &&
-          <SelectTags onBack={this.onBack} onSelect={this.onSelect} onPublish={this.onPublish}/>}
+          <SelectTags onBack={this.onBack} onSelect={this.onSelect} onPublish={this.onPublish}
+                      isPublishing={this.state.isPublishing}/>}
         </Paper>
       </ContentTemplate>
     );
