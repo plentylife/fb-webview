@@ -32,22 +32,26 @@ class ViewPage extends Component {
       error: "",
       tokens: [],
       comments: [],
-      commentsLink: "https://facebook.com/" + props.match.params.id
+      commentsLink: "https://facebook.com/" + this.getId(props)
     };
 
     this.getData(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id !== this.props.match.params.id) {
+    if (this.getId(nextProps) !== this.getId(this.props)) {
       this.getData(nextProps)
     }
   }
 
+  getId(props) {
+    return props.id ? props.id : props.match.params.id
+  }
+
   getData(props) {
-    if (props.match.params.id) {
+    if (this.getId(props)) {
       console.log("view mount");
-      ServerComms.getPost(props.match.params.id).then(contents => {
+      ServerComms.getPost(this.getId(props)).then(contents => {
         let body = stripNonBodyFromPost(contents.body);
         let tokens = splitStrIntoTokens(body);
         tokens = selectTokensBasedOnContext(tokens);
@@ -65,15 +69,15 @@ class ViewPage extends Component {
   render() {
     let classes = this.props.classes;
     return (
-      <ContentTemplate title="Viewing an offer">
+      <Container title="Viewing an offer" inline={this.props.inline}>
         <View className={classes.controlPanelContainer}>
-          <BidDash id={this.props.match.params.id}/>
+          <BidDash id={this.getId(this.props)}/>
           <View>
             <Typography>Earn {Tenge}hanks by </Typography>
             <Link to={viewPath("/donation/create")}>
               <Button>getting rid of stuff</Button></Link>
 
-            <TouchableWithoutFeedback onPress={() => FbUtils.share(this.props.match.params.id, this.state.tokens)}>
+            <TouchableWithoutFeedback onPress={() => FbUtils.share(this.getId(this.props), this.state.tokens)}>
               <View>
                 <Button className={classes.withUnderline}>sharing</Button>
               </View>
@@ -95,9 +99,22 @@ class ViewPage extends Component {
           {this.state.comments.length > 0 && <Comments comments={this.state.comments}/>}
           {this.state.comments.length === 0 && <Typography>No comments yet... leave one</Typography>}
         </Paper>
-      </ContentTemplate>
+      </Container>
     );
   }
 }
 
+function Container(props) {
+  if (props.inline) {
+    return (<View>
+      {props.children}
+    </View>)
+  } else {
+    return (<ContentTemplate title={props.title}>
+      {props.children}
+    </ContentTemplate>)
+  }
+}
+
 export default connect(mapViewOfferToProps)(withStyles(styles)(ViewPage))
+

@@ -82,6 +82,7 @@ class PanelComp extends Component {
   }
 
   onBidPress() {
+    // fixme notify user that everything went fine
     this.verifyBid(this.getUserBid());
     {
       ServerComms.sendBidToServer(this.props.id, this.getUserBid()).catch(e => {

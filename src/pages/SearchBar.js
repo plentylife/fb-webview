@@ -8,7 +8,7 @@ import {viewPath} from "../utils/Common";
 
 
 class SearchBar extends Component {
-
+  /* fixme. search on enter press */
   constructor(props) {
     super(props);
 
@@ -30,7 +30,7 @@ class SearchBar extends Component {
                    onChange={this.onUpdate} defaultValue={this.props.search ? this.props.search : ""}
         />
         {!!this.state.q &&
-        <Link className={this.props.classes.link} to={viewPath("/search/" + encodeURI(this.state.q))}>
+        <Link className={this.props.classes.link} to={viewPath("/search/?q=" + encodeURI(this.state.q))}>
           <Button className={this.props.classes.button} raised>go</Button>
         </Link>
         }

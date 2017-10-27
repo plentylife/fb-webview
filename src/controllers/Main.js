@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import {MuiThemeProvider} from 'material-ui/styles';
 import FallbackPage from '../pages/FallbackPage'
 import {viewPath} from 'utils/Common'
@@ -16,20 +16,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      failedToGetUserId: false,
+      fbFail: false,
       extLoaded: false,
       sdkLoaded: false
     };
-    this.onGetUserIdSuccess = this.onGetUserIdSuccess.bind(this);
-    this.onGetUserIdFailure = this.onGetUserIdFailure.bind(this)
+    this.onFbFail = this.onFbFail.bind(this)
   }
 
-  onGetUserIdSuccess(id) {
-    console.log("user id", id)
-  }
-
-  onGetUserIdFailure(e, m) {
-    console.log("failed to get user id", e, m)
+  onFbFail() {
+    console.log("FB ext failed");
+    if (window.IS_IN_TEST_MODE === true) {
+      this.setState({fbFail: true})
+    }
   }
 
   componentWillMount() {
@@ -40,7 +38,7 @@ class App extends Component {
     window.extAsyncInit = () => {
       console.log("extensions injected");
       props.loadedLibrary("ext");
-      FbUtils.setContextVariables(this.onGetUserIdSuccess, this.onGetUserIdFailure);
+      FbUtils.setContextVariables(this.onFbFail);
 
       MessengerExtensions.getSupportedFeatures(function success(result) {
         let features = result.supported_features;
@@ -59,7 +57,7 @@ class App extends Component {
     return (
         <MuiThemeProvider theme={theme}>
           <Router>
-            <MainView shouldFallback={this.state.failedToGetUserId}/>
+            <MainView shouldFallback={this.state.fbFail}/>
           </Router>
         </MuiThemeProvider>
     );
@@ -67,12 +65,15 @@ class App extends Component {
 }
 
 function MainView(props) {
+  // fixme add not found
   return (
     <View id="app-container">
       {props.shouldFallback && <Redirect to={viewPath("/fallback")}/>}
-      <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
-      <Route path={viewPath("/donation")} component={DonationRouter}/>
-      <Route path={viewPath("/search")} component={SearchPage}/>
+      <Switch>
+        <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
+        <Route path={viewPath("/donation")} component={DonationRouter}/>
+        <Route path={viewPath("/search")} component={SearchPage}/>
+      </Switch>
     </View>
   )
 }

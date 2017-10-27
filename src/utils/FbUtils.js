@@ -35,13 +35,17 @@ export default class FbUtils {
    * @param onFail, function that is executed if getting user id failed. Should happen only on outdated or web clients.
    */
   // fixme rename
-  static setContextVariables(onSuccess, onFail) {
+  static setContextVariables(onFail) {
     MessengerExtensions.getContext(window.APP_ID, (context) => {
       console.log("context", context);
       ServerComms.sRequestResolve(context.signed_request);
-      FbUtils.userId = context.psid
+      FbUtils.userId = context.psid;
+      if (!context.psid) {
+        onFail()
+      }
     }, (e) => {
-      ServerComms.sRequestReject(e)
+      ServerComms.sRequestReject(e);
+      onFail()
     });
   }
 

@@ -10,6 +10,8 @@ import Typography from 'material-ui/Typography';
 
 class SelectTags extends Component {
   render() {
+    // fixme add direcitons
+
     console.log("SelectTags render ", this.props);
     let classes = this.props.classes;
     let i = -1;
@@ -31,6 +33,7 @@ class SelectTags extends Component {
             <Button className={classes.button} style={{width: '5em'}} raised dense>Back</Button>
           </View>
         </TouchableWithoutFeedback>
+        {/* fixme create a modal indicating loading */}
         <TouchableWithoutFeedback onPress={this.props.onPublish}>
           <View>
             <Button color="primary" className={classes.button} raised dense>Publish</Button>
