@@ -35,6 +35,7 @@ function TokenView(props) {
   }
 
   return (<View className={[classes.tokenContainer, classes.rowFlex].join(' ')}>
+    {tokenArray.length === 0 && <Typography>Loading...</Typography>}
     {tokenArray}
   </View>)
 }
