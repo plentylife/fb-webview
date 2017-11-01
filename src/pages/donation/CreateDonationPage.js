@@ -10,6 +10,7 @@ import styles from './styles'
 import EnterDescription from './EnterDescripton'
 import SelectTags from './SelectTags'
 import Server from 'utils/ServerComms'
+import {Typography} from "material-ui";
 
 class CreateDonationPages extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class CreateDonationPages extends Component {
     let classes = this.props.classes;
     return (
       <ContentTemplate title={this.titles[this.state.tagSelectionMode ? 1 : 0]} history={this.props.history}>
+        {(this.state.tagSelectionMode) && <SelectTagsInstructions/>}
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
           {(!this.state.tagSelectionMode) && <EnterDescription onNext={this.onNext}/>}
@@ -99,6 +101,16 @@ class CreateDonationPages extends Component {
       </ContentTemplate>
     );
   }
+}
+
+function SelectTagsInstructions(props) {
+  return (
+    <Paper>
+      <Typography>
+        Click to select at least one hashtag. Then press <i>`Publish`</i>.
+      </Typography>
+    </Paper>
+  )
 }
 
 export default connect(ctr.mapNewOfferToProps, ctr.mapNewOfferDispatchToProps)(withStyles(styles)(CreateDonationPages))
