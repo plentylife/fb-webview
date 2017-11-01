@@ -134,7 +134,8 @@ class PanelComp extends Component {
     console.log("panel render", this.state);
     let c = this.props.classes;
     return (
-      <Paper className={classNames(this.props.classes.outerBidPanel, this.state.bidSubmitted ? c.bidSuccess : null)}>
+      <Paper
+        className={classNames(this.props.classes.outerBidPanel, this.state.bidSubmitted ? c.successBackground : null)}>
         <Error error={this.state.error}/>
         {!this.state.bidSubmitted && <BidControls {...this.props} buttonDisabled={this.state.buttonDisabled}
                                                   getUserBid={this.getUserBid} onBidChange={this.onBidChange}

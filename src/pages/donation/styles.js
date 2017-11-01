@@ -103,7 +103,7 @@ const styles = theme => {
       marginTop: '0.3em',
       marginBottom: '0.3em',
     },
-    bidSuccess: {
+    successBackground: {
       backgroundColor: lightGreen['500']
     },
     waitButton: {
@@ -111,6 +111,17 @@ const styles = theme => {
     },
     successTypo: {
       width: 100
+    },
+
+    rpButton: {
+      padding: 3,
+      minHeight: 'auto',
+      fontSize: 'small'
+    }, rpContainer: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center'
     }
   }
 };
