@@ -7,21 +7,21 @@ import classNames from 'classnames'
 
 function TokenView(props) {
   let classes = props.classes;
+  if (props.tokens.length === 0) return <Typography>Loading...</Typography>;
+
+
   let i = 0;
   let l = props.tokens.length;
-  let buttonIndex = Math.ceil(l / 2);
-  let buttonPlaced = false;
+  let lastTagged = 0;
 
   let tokenArray = [];
   while (i < l) {
     let t = props.tokens[i];
-    // console.log(t)
-    if (!buttonPlaced && i === buttonIndex) {
-      buttonPlaced = true;
-      tokenArray.push(<ReqPics/>)
-    }
 
     i += 1;
+    if (t.isTagged) {
+      lastTagged = i
+    }
     if (t.isSelectable) {
       tokenArray.push(<Typography key={i}
                                   className={[classes.token, classes.selectable, t.isTagged ? classes.selected : ""].join(' ')}
@@ -34,8 +34,9 @@ function TokenView(props) {
     }
   }
 
+  tokenArray.splice(lastTagged + 1, 0, <ReqPics key="rpbutton"/>);
+
   return (<View className={[classes.tokenContainer, classes.rowFlex].join(' ')}>
-    {tokenArray.length === 0 && <Typography>Loading...</Typography>}
     {tokenArray}
   </View>)
 }

@@ -60,7 +60,7 @@ class Dash extends Component {
                                        highestBidById={this.state.hbbi}
                                        minBid={this.state.minBid}
                                        balance={this.state.accountBalance} expiry={this.state.daysToExpiry}
-                                       id={this.props.id}/>}
+                                       id={this.props.id} referrer={this.props.referrer}/>}
         {!this.state.expanded && <BidButton onPress={this.onBidPress}/>}
       </View>
     )
@@ -87,7 +87,7 @@ class PanelComp extends Component {
     // fixme notify user that everything went fine
     this.verifyBid(this.getUserBid());
     {
-      ServerComms.sendBidToServer(this.props.id, this.getUserBid()).then(r => {
+      ServerComms.sendBidToServer(this.props.id, this.props.referrer, this.getUserBid()).then(r => {
         this.setState({bidSubmitted: true})
       }).catch(e => {
         this.setState({error: "oops... something went wrong"})
@@ -150,11 +150,12 @@ class PanelComp extends Component {
 
 class BidControlsComp extends PureComponent {
   render() {
+    let expiryTime = this.props.expiry < 365 ? this.props.expiry + " days" : "over a year";
     return (
       <View className={this.props.classes.innerBidPanel}>
 
         <Typography>You have {this.props.balance} {Tenge}hanks</Typography>
-        <Typography>1{Tenge} expires in {this.props.expiry} days </Typography>
+        <Typography>1{Tenge} expires in {expiryTime}</Typography>
         {this.props.highestBidBy &&
         <Typography>Highest bid is {this.props.highestBidAmount} by {this.props.highestBidBy} </Typography>}
         <TextField type='number' value={this.props.getUserBid()} onChange={this.props.onBidChange}

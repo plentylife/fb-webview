@@ -7,7 +7,8 @@ export default class ServerComms {
   // r4JLrrEYvKn-1S_fEFmjqcTwr99YbrAYKYN92frktZw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODc3NTY1NSwicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjEzMTQwNjcwNjIwNTQ0OTIiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fVVNFUiIsInRpZCI6IjE0ODI4MDU5MTg0Njc0MDQifQ
 
   static signedRequest = Promise.resolve(
-    "r4JLrrEYvKn-1S_fEFmjqcTwr99YbrAYKYN92frktZw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODc3NTY1NSwicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjEzMTQwNjcwNjIwNTQ0OTIiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fVVNFUiIsInRpZCI6IjE0ODI4MDU5MTg0Njc0MDQifQ"
+    // "r4JLrrEYvKn-1S_fEFmjqcTwr99YbrAYKYN92frktZw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODc3NTY1NSwicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjEzMTQwNjcwNjIwNTQ0OTIiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fVVNFUiIsInRpZCI6IjE0ODI4MDU5MTg0Njc0MDQifQ"
+    'aTUejAIYVKl6uOU6203JDtlxOa0rtE3k8vYw_0TG8uc.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODUyNTg1MywicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjE3ODMxNDY2NzUwMzMxODMiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fUEFHRSIsInRpZCI6IjE3ODMxNDY2NzUwMzMxODMifQ'
   );
   static sRequestResolve;
   static sRequestReject;
@@ -62,10 +63,10 @@ export default class ServerComms {
     })
   }
 
-  static sendBidToServer(donationId, amount) {
+  static sendBidToServer(donationId, ref, amount) {
     return ServerComms.generateBody({amount: amount}).then(b => {
       console.log("bid body", b);
-      return fetch(backPath("/donation/" + donationId), {method: "PUT", body: b}).then(resp => {
+      return fetch(backPath("/donation/" + donationId + "?ref=" + ref), {method: "PUT", body: b}).then(resp => {
         return ServerComms.toJsonOrReject(resp)
       })
     })

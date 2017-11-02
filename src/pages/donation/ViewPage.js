@@ -48,6 +48,11 @@ class ViewPage extends Component {
     return props.id ? props.id : props.match.params.id
   }
 
+  static getRef(props) {
+    let q = props.location.search.replace("?ref=", "");
+    return decodeURI(q)
+  }
+
   getData(props) {
     if (this.getId(props)) {
       console.log("view mount");
@@ -71,7 +76,7 @@ class ViewPage extends Component {
     return (
       <Container title="Viewing an offer" inline={this.props.inline} history={this.props.history}>
         <View className={classes.controlPanelContainer}>
-          <BidDash id={this.getId(this.props)}/>
+          <BidDash id={this.getId(this.props)} referrer={ViewPage.getRef(this.props)}/>
           <View className={classes.centerItems}>
             <Typography>Earn {Tenge}hanks by </Typography>
             <Link to={viewPath("/donation/create")}>
