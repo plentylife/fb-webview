@@ -19,7 +19,8 @@ class SearchPage extends Component {
     this.state = {
       error: "",
       items: null,
-      search: SearchPage.getQuery(props)
+      search: SearchPage.getQuery(props),
+      loading: false
     };
 
     this.update(props)
@@ -41,15 +42,16 @@ class SearchPage extends Component {
   }
 
   update(props) {
+    this.setState({loading: true});
     ServerComms.search(SearchPage.getQuery(props)).then(res => {
       console.log(res);
       let items = res.map(d => {
         let tagged = d.description.filter(t => (t.isTagged));
         return {id: d.id, tokens: tagged}
       });
-      this.setState({items: items, error: ""})
+      this.setState({items: items, error: "", loading: false})
     }).catch(e => {
-      this.setState({error: "oops... could not get results"})
+      this.setState({error: "oops... could not get results", loading: false})
     })
   }
 
@@ -58,16 +60,17 @@ class SearchPage extends Component {
     return (
       <ContentTemplate title="Search results" search={this.state.search} history={this.props.history}>
         <Error error={this.state.error}/>
+        {this.state.loading && <Loading/>}
 
         <ScrollView className={c.scrollView}>
           <List>
             {this.state.items && this.state.items.map(i => {
               return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}></SearchItem>)
             })}
-            {this.state.items !== null && this.state.items.length === 0 && SearchPage.hasQuery(this.props) &&
-            <NothingFound/>}
+            {!this.state.loading && this.state.items !== null && this.state.items.length === 0
+            && SearchPage.hasQuery(this.props) && <NothingFound/>}
             {this.state.items !== null && this.state.items.length === 0 && !SearchPage.hasQuery(this.props) &&
-            <SearchNotStarted/>}
+            !this.state.loading && <SearchNotStarted/>}
           </List>
 
         </ScrollView>
@@ -125,6 +128,14 @@ function SearchNotStartedComp(props) {
   )
 }
 
+function LoadingComp(props) {
+  return (
+    <Paper className={props.classes.item}>
+      <Typography>Loading results...</Typography>
+    </Paper>
+  )
+}
+
 const styles = (t) => ({
   scrollView: {
     paddingTop: t.spacing.unit,
@@ -141,5 +152,6 @@ const styles = (t) => ({
 const SearchItem = withStyles(styles)(SearchItemComp);
 const NothingFound = withStyles(styles)(NothingFoundComp);
 const SearchNotStarted = withStyles(styles)(SearchNotStartedComp);
+const Loading = withStyles(styles)(LoadingComp);
 
 export default withStyles(styles)(SearchPage)
