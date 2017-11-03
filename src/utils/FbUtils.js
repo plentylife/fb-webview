@@ -60,7 +60,14 @@ export default class FbUtils {
     return title
   }
 
-  static share(donationId, tokens) {
+
+  static globalViewPathWithRef(path, ref) {
+    return globalViewPath(path) + "?ref=" + ref
+  }
+
+  static share(donationId, tokens, onFinish) {
+    let ref = FbUtils.userId;
+
     let messageToShare = {
       "attachment": {
         "type": "template",
@@ -74,13 +81,13 @@ export default class FbUtils {
               "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url": globalViewPath("/donation/" + donationId)
+              "url": FbUtils.globalViewPathWithRef("/donation/" + donationId, ref)
             },
             "buttons": [{
               "type": "web_url",
               "webview_height_ratio": "full",
               "messenger_extensions": true,
-              "url": globalViewPath("/donation/" + donationId),
+              "url": FbUtils.globalViewPathWithRef("/donation/" + donationId, ref),
               "title": "View"
             }]
           }]
@@ -92,7 +99,8 @@ export default class FbUtils {
         // User dismissed without error, but did they
         // share the message?
 
-        console.log("sharing", response)
+        console.log("sharing", response);
+        onFinish()
 
       }, function error(errorCode, errorMessage) {
         // An error occurred in the process

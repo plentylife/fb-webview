@@ -72,7 +72,7 @@ const styles = theme => {
       justifyContent: 'space-around',
       paddingTop: '1em',
       alignItems: "center",
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
     },
     noUnderline: {
       textDecoration: 'none'
@@ -90,6 +90,11 @@ const styles = theme => {
       justifyContent: 'space-around',
       alignItems: "center",
       width: '100%'
+    },
+    shareSuccess: {
+      maxWidth: '10em',
+      textAlign: 'justify',
+      padding: theme.spacing.unit
     },
 
     innerBidPanel: {

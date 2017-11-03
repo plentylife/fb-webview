@@ -32,10 +32,12 @@ class ViewPage extends Component {
       error: "",
       tokens: [],
       comments: [],
-      commentsLink: "https://facebook.com/" + this.getId(props)
+      commentsLink: "https://facebook.com/" + this.getId(props),
+      shareSuccess: false
     };
 
-    this.getData(this.props)
+    this.getData(this.props);
+    this.onShare = this.onShare.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,6 +73,10 @@ class ViewPage extends Component {
     }
   }
 
+  onShare() {
+    this.setState({shareSuccess: true})
+  }
+
   render() {
     let classes = this.props.classes;
     return (
@@ -82,9 +88,13 @@ class ViewPage extends Component {
             <Link to={viewPath("/donation/create")}>
               <Button>getting rid of stuff</Button></Link>
 
-            <TouchableWithoutFeedback onPress={() => FbUtils.share(this.getId(this.props), this.state.tokens)}>
-              <View>
+            <TouchableWithoutFeedback onPress={() =>
+              FbUtils.share(this.getId(this.props), this.state.tokens, this.onShare)}>
+              <View className={this.state.shareSuccess ? classes.successBackground : null}>
                 <Button className={classes.withUnderline}>sharing</Button>
+                {this.state.shareSuccess && <Typography className={classes.shareSuccess}>
+                  You will be rewarded {Tenge}hanks once your friends place bids
+                </Typography>}
               </View>
             </TouchableWithoutFeedback>
 
