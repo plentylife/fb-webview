@@ -36,6 +36,10 @@ class SearchPage extends Component {
     return decodeURI(q)
   }
 
+  static hasQuery(props) {
+    return !props.location || props.location.search.includes("?q=")
+  }
+
   update(props) {
     ServerComms.search(SearchPage.getQuery(props)).then(res => {
       console.log(res);
@@ -60,7 +64,10 @@ class SearchPage extends Component {
             {this.state.items && this.state.items.map(i => {
               return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}></SearchItem>)
             })}
-            {this.state.items !== null && this.state.items.length === 0 && <NothingFound/>}
+            {this.state.items !== null && this.state.items.length === 0 && SearchPage.hasQuery(this.props) &&
+            <NothingFound/>}
+            {this.state.items !== null && this.state.items.length === 0 && !SearchPage.hasQuery(this.props) &&
+            <SearchNotStarted/>}
           </List>
 
         </ScrollView>
@@ -110,6 +117,14 @@ function NothingFoundComp(props) {
   )
 }
 
+function SearchNotStartedComp(props) {
+  return (
+    <Paper className={props.classes.item}>
+      <Typography>Please enter a search tag into the search bar above</Typography>
+    </Paper>
+  )
+}
+
 const styles = (t) => ({
   scrollView: {
     paddingTop: t.spacing.unit,
@@ -125,5 +140,6 @@ const styles = (t) => ({
 
 const SearchItem = withStyles(styles)(SearchItemComp);
 const NothingFound = withStyles(styles)(NothingFoundComp);
+const SearchNotStarted = withStyles(styles)(SearchNotStartedComp);
 
 export default withStyles(styles)(SearchPage)
