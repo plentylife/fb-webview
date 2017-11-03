@@ -84,9 +84,8 @@ class PanelComp extends Component {
   }
 
   onBidPress() {
-    // fixme notify user that everything went fine
-    this.verifyBid(this.getUserBid());
-    {
+    let valid = this.verifyBid(this.getUserBid());
+    if (valid) {
       ServerComms.sendBidToServer(this.props.id, this.props.referrer, this.getUserBid()).then(r => {
         this.setState({bidSubmitted: true})
       }).catch(e => {
