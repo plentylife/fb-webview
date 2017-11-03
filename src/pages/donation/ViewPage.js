@@ -102,7 +102,7 @@ class ViewPage extends Component {
         </View>
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
-          <TokenView tokens={this.state.tokens}/>
+          <TokenView tokens={this.state.tokens} commentsLink={this.state.commentsLink}/>
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
           <View className={classes.commentLinksContainer}>

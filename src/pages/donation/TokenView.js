@@ -34,7 +34,7 @@ function TokenView(props) {
     }
   }
 
-  tokenArray.splice(lastTagged + 1, 0, <ReqPics key="rpbutton"/>);
+  tokenArray.splice(lastTagged + 1, 0, <ReqPics key="rpbutton" commentsLink={props.commentsLink}/>);
 
   return (<View className={[classes.tokenContainer, classes.rowFlex].join(' ')}>
     {tokenArray}
@@ -52,10 +52,12 @@ class RequestPicturesButton extends Component {
   render() {
     let c = this.props.classes;
     return <View className={c.rpContainer}>
-      <Button raised color='primary'
-              className={classNames(c.rpButton, this.state.success ? c.successBackground : null)}>
-        {this.state.success ? 'Owner was notified' : 'Request pictures'}
-      </Button>
+      <a target="_blank" href={this.props.commentsLink} className={c.noUnderline}>
+        <Button raised color='primary'
+                className={classNames(c.rpButton, this.state.success ? c.successBackground : null)}>
+          {this.state.success ? 'Owner was notified' : 'Request pictures'}
+        </Button>
+      </a>
     </View>
   }
 }
