@@ -82,6 +82,14 @@ export default class ServerComms {
     )
   }
 
+  static heartbeat() {
+    ServerComms.generateBody(null).then(b => {
+      return fetch(backPath("/heartbeat"), {method: "POST", body: b}).then(resp => {
+        console.log("heartbeat status", resp.status)
+      })
+    })
+  }
+
   static fetchSimple(payload, path, isPut) {
     return ServerComms.generateBody(payload).then(b => {
       return fetch(backPath(path), {method: isPut ? "PUT" : "POST", body: b}).then(resp => {

@@ -4,6 +4,7 @@ import Main from './controllers/Main';
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import reducer from "redux/reducers"
+import ServerComms from "./utils/ServerComms";
 
 // process.env.NODE_ENV = 'production';
 
@@ -26,6 +27,9 @@ try {
     initialProps: {},
     rootTag: document.getElementById('root')
   });
+
+  ServerComms.heartbeat();
+
   console.re.log("no error")
 
 } catch (e) {
