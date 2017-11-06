@@ -6,9 +6,8 @@ import {createStore} from 'redux'
 import reducer from "redux/reducers"
 import ServerComms from "./utils/ServerComms";
 
-// process.env.NODE_ENV = 'production';
-
-const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
+// const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
+const store = createStore(reducer, {newOffer: {description: ""}});
 
 function App() {
   return (
@@ -30,9 +29,10 @@ try {
 
   ServerComms.heartbeat();
 
-  console.re.log("no error")
+  // console.re.log("no error")
 
 } catch (e) {
-  console.re.log("error occured");
-  console.re.log(e)
+  console.log("severe error", e)
+  // console.re.log("error occured");
+  // console.re.log(e)
 }

@@ -54,11 +54,11 @@ module.exports = {
     ]
   },
   plugins: [
-    // new UglifyJSPlugin(),
+    new UglifyJSPlugin(),
     // new ExtractPlugin("styles.css"),
-    // new webpack.DefinePlugin({
-    //   VIEW_PATH: '/test',
-    // })
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify('production'),
+    }),
     new SplitByPathPlugin([
       { name: 'index', path: 'src/' },
       { name: 'vendor', path: path.join(__dirname, 'node_modules/')},
