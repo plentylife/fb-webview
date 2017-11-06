@@ -54,10 +54,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new UglifyJSPlugin(),
+    // new UglifyJSPlugin(),
     // new ExtractPlugin("styles.css"),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify('production'),
+      // "process.env.NODE_ENV": JSON.stringify('production'),
     }),
     new SplitByPathPlugin([
       { name: 'index', path: 'src/' },

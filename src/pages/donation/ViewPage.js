@@ -22,6 +22,7 @@ import {viewPath} from "../../utils/Common";
 import {Button, Typography} from "material-ui";
 import {Tenge} from 'utils/Common'
 import FbUtils from "../../utils/FbUtils";
+import cn from 'classnames'
 
 class ViewPage extends Component {
   constructor(props) {
@@ -33,11 +34,13 @@ class ViewPage extends Component {
       tokens: [],
       comments: [],
       commentsLink: "https://facebook.com/" + this.getId(props),
-      shareSuccess: false
+      shareSuccess: false,
+      displayEarnOptions: false
     };
 
     this.getData(this.props);
-    this.onShare = this.onShare.bind(this)
+    this.onShare = this.onShare.bind(this);
+    this.onEarnPress = this.onEarnPress.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,26 +80,34 @@ class ViewPage extends Component {
     this.setState({shareSuccess: true})
   }
 
+  onEarnPress() {
+    this.setState({displayEarnOptions: true})
+  }
+
   render() {
     let classes = this.props.classes;
     return (
       <Container title="Viewing an offer" inline={this.props.inline} history={this.props.history}>
         <View className={classes.controlPanelContainer}>
           <BidDash id={this.getId(this.props)} referrer={ViewPage.getRef(this.props)}/>
-          <View className={classes.centerItems}>
-            <Typography>Earn {Tenge}hanks by </Typography>
-            <Link to={viewPath("/donation/create")}>
-              <Button>getting rid of stuff</Button></Link>
+          <View className={cn(classes.centerItems)}>
+            {!this.state.displayEarnOptions &&
+            <TouchableWithoutFeedback onPress={this.onEarnPress}>
+              <Button className={cn(classes.secondaryButton, classes.keepLowercase)}>Earn {Tenge}hanks</Button>
+            </TouchableWithoutFeedback>
+            }
+            {this.state.displayEarnOptions && <Link className={classes.noUnderline} to={viewPath("/donation/create")}>
+              <Button className={cn(classes.secondaryButton, classes.noUnderline)}>donate</Button></Link>}
 
-            <TouchableWithoutFeedback onPress={() =>
+            {this.state.displayEarnOptions && <TouchableWithoutFeedback onPress={() =>
               FbUtils.share(this.getId(this.props), this.state.tokens, this.onShare)}>
               <View className={this.state.shareSuccess ? classes.successBackground : null}>
-                <Button className={classes.withUnderline}>sharing</Button>
+                <Button className={cn(classes.secondaryButton, classes.withMinimalTopMargin)}>share</Button>
                 {this.state.shareSuccess && <Typography className={classes.shareSuccess}>
                   You will be rewarded {Tenge}hanks once your friends place bids
                 </Typography>}
               </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>}
 
           </View>
         </View>
@@ -108,7 +119,7 @@ class ViewPage extends Component {
           <View className={classes.commentLinksContainer}>
             {/* fixme will fail on mobile */}
             <a target="_blank" href={this.state.commentsLink} className={classes.noUnderline}>
-              <Button raised color="primary">Add Comment or Picture</Button>
+              <Button raised color="primary">Ask for Details</Button>
             </a>
           </View>
           {this.state.comments.length > 0 && <Comments comments={this.state.comments}/>}

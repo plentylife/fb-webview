@@ -1,6 +1,7 @@
 import {lightGreen} from 'material-ui/colors';
 
 const styles = theme => {
+  console.log("styles theme", theme);
   return {
     button: {
       alignSelf: "center",
@@ -29,8 +30,8 @@ const styles = theme => {
       flexGrow: 1,
       flexShrink: 1,
       color: theme.palette.text.secondary,
-      marginLeft: '0.5em',
-      marginRight: '0.5em',
+      // marginLeft: '0.5em',
+      // marginRight: '0.5em',
     },
     tokenContainer: Object.assign({
       flexWrap: 'wrap',
@@ -53,7 +54,8 @@ const styles = theme => {
       marginBottom: theme.spacing.unit * 2,
       fontSize: "2em",
       fontWeight: 600,
-      color: theme.palette.secondary["900"]
+      // color: theme.palette.secondary["900"]
+      color: 'black'
     },
     rowFlex: {
       display: 'flex',
@@ -65,6 +67,38 @@ const styles = theme => {
     nested: {
       paddingLeft: theme.spacing.unit * 4,
     },
+    singleCommentContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      paddingTop: 0,
+      paddingBottom: theme.spacing.unit
+    },
+    commentUserName: {
+      maxWidth: '9em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      marginRight: '3px',
+      marginLeft: 3
+    },
+    commentInfo: {
+      color: theme.palette.text.secondary,
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      fontSize: 'smaller'
+    },
+    commentLinksContainer: {
+      marginBottom: '0.3em',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: "center",
+      width: '100%'
+    },
 
     controlPanelContainer: {
       display: 'flex',
@@ -74,22 +108,10 @@ const styles = theme => {
       alignItems: "center",
       flexWrap: 'wrap',
     },
-    noUnderline: {
-      textDecoration: 'none'
-    },
-    withUnderline: {
-      textDecoration: 'underline'
-    },
-    centerItems: {
-      alignItems: 'center'
-    },
-    commentLinksContainer: {
-      marginBottom: '0.3em',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: "center",
-      width: '100%'
+    secondaryButton: {
+      border: '1px solid black',
+      padding: '3px 5px',
+      minHeight: 0
     },
     shareSuccess: {
       maxWidth: '10em',
@@ -108,15 +130,7 @@ const styles = theme => {
       marginTop: '0.3em',
       marginBottom: '0.3em',
     },
-    successBackground: {
-      backgroundColor: lightGreen['500']
-    },
-    waitButton: {
-      backgroundColor: lightGreen['500']
-    },
-    successTypo: {
-      width: 100
-    },
+
 
     rpButton: {
       padding: 3,
@@ -127,6 +141,35 @@ const styles = theme => {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center'
+    },
+
+    noUnderline: {
+      textDecoration: 'none'
+    },
+    withUnderline: {
+      textDecoration: 'underline'
+    },
+    centerItems: {
+      alignItems: 'center'
+    },
+    successBackground: {
+      backgroundColor: lightGreen['500']
+    },
+    waitButton: {
+      backgroundColor: lightGreen['500']
+    },
+    successTypo: {
+      width: 100
+    },
+    inheritTextProps: {
+      color: 'inherit',
+      fontSize: 'inherit'
+    },
+    withMinimalTopMargin: {
+      marginTop: 3
+    },
+    keepLowercase: {
+      textTransform: 'none'
     }
   }
 };
