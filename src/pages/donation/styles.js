@@ -127,11 +127,13 @@ const styles = theme => {
       paddingTop: '1em',
       alignItems: "center",
       flexWrap: 'wrap',
+      marginBottom: theme.spacing.unit
     },
     secondaryButton: {
       border: '1px solid black',
       padding: '3px 5px',
-      minHeight: 0
+      minHeight: 0,
+      textTransform: 'none'
     },
     shareSuccess: {
       maxWidth: '10em',
@@ -187,6 +189,9 @@ const styles = theme => {
     },
     withMinimalTopMargin: {
       marginTop: 3
+    },
+    withNormalTopMargin: {
+      marginTop: theme.spacing.unit
     },
     keepLowercase: {
       textTransform: 'none'

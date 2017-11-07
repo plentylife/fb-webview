@@ -104,12 +104,14 @@ class ViewPage extends Component {
             </TouchableWithoutFeedback>
             }
             {this.state.displayEarnOptions && <Link className={classes.noUnderline} to={viewPath("/donation/create")}>
-              <Button className={cn(classes.secondaryButton, classes.noUnderline)}>donate</Button></Link>}
+              <Button className={cn(classes.secondaryButton, classes.noUnderline)}>by Getting Rid of
+                Stuff</Button></Link>}
 
             {this.state.displayEarnOptions && <TouchableWithoutFeedback onPress={() =>
               FbUtils.share(this.getId(this.props), this.state.tokens, this.onShare)}>
               <View className={this.state.shareSuccess ? classes.successBackground : null}>
-                <Button className={cn(classes.secondaryButton, classes.withMinimalTopMargin)}>share</Button>
+                <Button className={cn(classes.secondaryButton, classes.withNormalTopMargin)}>by Sharing this
+                  Post</Button>
                 {this.state.shareSuccess && <Typography className={classes.shareSuccess}>
                   You will be rewarded {Tenge}hanks once your friends place bids
                 </Typography>}
