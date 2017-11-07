@@ -39,6 +39,9 @@ const styles = theme => {
       marginBottom: 3,
       paddingBottom: 3
     },
+    profilePic: {
+      maxHeight: 30
+    },
     token: {
       paddingTop: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,

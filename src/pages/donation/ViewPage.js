@@ -33,6 +33,7 @@ class ViewPage extends Component {
       error: "",
       tokens: [],
       comments: [],
+      userInfo: null,
       commentsLink: "https://facebook.com/" + this.getId(props),
       shareSuccess: false,
       displayEarnOptions: false
@@ -70,6 +71,10 @@ class ViewPage extends Component {
       }).catch(e => {
         console.log("Could not display offer:", e);
         this.setState({error: "oops, we're not able to show you this offer..."})
+      });
+      ServerComms.getDonationUser(this.getId(props)).then(ui => {
+        console.log("user info", ui);
+        this.setState({userInfo: ui})
       })
     } else {
       this.setState({error: "oops, we're not able to show you this offer..."})
@@ -115,11 +120,12 @@ class ViewPage extends Component {
         </View>
         <Paper component={View} elevation={2} className={classes.adPaper}>
           <Error error={this.state.error}/>
-          <View className={classes.flexRow}>
+          {this.state.userInfo && <View className={classes.flexRow}>
+            <img src={this.state.userInfo.profilePic} className={classes.profilePic}/>
             <Typography className={classes.adTitle} component={Text}>
-              Anton Kats is offering:
+              {this.state.userInfo.name} {this.state.userInfo.lastName} is offering:
             </Typography>
-          </View>
+          </View>}
           <TokenView tokens={this.state.tokens} commentsLink={this.state.commentsLink}/>
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
