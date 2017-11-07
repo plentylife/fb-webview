@@ -1,4 +1,5 @@
 import {lightGreen} from 'material-ui/colors';
+import {viewPath} from "../../utils/Common";
 
 const styles = theme => {
   console.log("styles theme", theme);
@@ -23,6 +24,21 @@ const styles = theme => {
       flexDirection: 'row',
       flexWrap: 'wrap'
     }),
+    adPaper: Object.assign({}, this.paper, {
+      border: '1px solid black',
+      borderRadius: 0,
+      background: 'url(' + viewPath('/resources/linedpaper.png') + ")"
+    }),
+    adTitle: {
+      borderBottom: '1px solid black',
+      paddingRight: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit,
+      marginLeft: theme.spacing.unit,
+      marginTop: 3,
+      display: 'inline-block',
+      marginBottom: 3,
+      paddingBottom: 3
+    },
     token: {
       paddingTop: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,
@@ -30,6 +46,7 @@ const styles = theme => {
       flexGrow: 1,
       flexShrink: 1,
       color: theme.palette.text.secondary,
+      fontFamily: "'Patrick Hand', sans-serif"
       // marginLeft: '0.5em',
       // marginRight: '0.5em',
     },
@@ -39,9 +56,9 @@ const styles = theme => {
       alignContent: "space-between"
     }, theme.fullWidth),
     selectable: {
-      marginLeft: '0.5em',
+      marginLeft: '0.3em',
       marginRight: 0,
-      fontSize: "1.5em"
+      fontSize: "1.7em"
     },
     // nonSelectable: {
     //
@@ -170,6 +187,10 @@ const styles = theme => {
     },
     keepLowercase: {
       textTransform: 'none'
+    },
+    flexRow: {
+      display: 'flex',
+      flexDirection: 'row'
     }
   }
 };

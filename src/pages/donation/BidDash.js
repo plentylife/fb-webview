@@ -11,7 +11,11 @@ import classNames from 'classnames'
 
 const styles = {
   view: {paddingTop: 5, display: 'flex', justifyContent: 'space-around', flexDirection: 'row'},
-  button: {width: '4em'}
+  button: {
+    width: '4em',
+    border: 'solid 1px black',
+    borderRadius: 0
+  }
 };
 
 class Dash extends Component {

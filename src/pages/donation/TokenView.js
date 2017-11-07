@@ -26,6 +26,7 @@ function TokenView(props) {
       tokenArray.push(<Typography key={i}
                                   className={[classes.token, classes.selectable, t.isTagged ? classes.selected : ""].join(' ')}
                                   component={Text}>
+        {t.isTagged && '#'}
         {t.token}
       </Typography>)
     } else {

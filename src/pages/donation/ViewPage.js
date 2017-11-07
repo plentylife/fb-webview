@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import {TouchableWithoutFeedback, View} from 'react-native';
+import {Text, TouchableWithoutFeedback, View} from 'react-native';
 import ContentTemplate from '../../templates/ContentTemplate'
 import {connect} from 'react-redux'
 import {
@@ -93,7 +93,9 @@ class ViewPage extends Component {
           <View className={cn(classes.centerItems)}>
             {!this.state.displayEarnOptions &&
             <TouchableWithoutFeedback onPress={this.onEarnPress}>
-              <Button className={cn(classes.secondaryButton, classes.keepLowercase)}>Earn {Tenge}hanks</Button>
+              <View>
+                <Button className={cn(classes.secondaryButton, classes.keepLowercase)}>Earn {Tenge}hanks</Button>
+              </View>
             </TouchableWithoutFeedback>
             }
             {this.state.displayEarnOptions && <Link className={classes.noUnderline} to={viewPath("/donation/create")}>
@@ -111,8 +113,13 @@ class ViewPage extends Component {
 
           </View>
         </View>
-        <Paper component={View} elevation={2} className={classes.paper}>
+        <Paper component={View} elevation={2} className={classes.adPaper}>
           <Error error={this.state.error}/>
+          <View className={classes.flexRow}>
+            <Typography className={classes.adTitle} component={Text}>
+              Anton Kats is offering:
+            </Typography>
+          </View>
           <TokenView tokens={this.state.tokens} commentsLink={this.state.commentsLink}/>
         </Paper>
         <Paper component={View} elevation={2} className={classes.paper}>
