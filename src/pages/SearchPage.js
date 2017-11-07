@@ -20,7 +20,8 @@ class SearchPage extends Component {
       error: "",
       items: null,
       search: SearchPage.getQuery(props),
-      loading: false
+      loading: false, // because it should be set in update()
+      nothingFound: false
     };
 
     this.update(props)
@@ -42,21 +43,29 @@ class SearchPage extends Component {
   }
 
   update(props) {
-    this.setState({loading: true});
-    ServerComms.search(SearchPage.getQuery(props)).then(res => {
-      console.log(res);
-      let items = res.map(d => {
-        let tagged = d.description.filter(t => (t.isTagged));
-        return {id: d.id, tokens: tagged}
-      });
-      this.setState({items: items, error: "", loading: false})
-    }).catch(e => {
-      this.setState({error: "oops... could not get results", loading: false})
-    })
+    // this.setState({loading: true});
+    if (SearchPage.getQuery(props)) {
+      new Promise((resolve, reject) => {
+        this.setState({loading: true});
+        ServerComms.search(SearchPage.getQuery(props)).then(res => {
+          let items = res.map(d => {
+            let tagged = d.description.filter(t => (t.isTagged));
+            return {id: d.id, tokens: tagged}
+          });
+          console.log("search", res, items, items.length === 0);
+          this.setState({items: items, error: "", loading: false, nothingFound: items.length === 0})
+        }).catch(e => {
+          this.setState({error: "oops... could not get results", loading: false})
+        });
+
+        resolve()
+      })
+    }
   }
 
   render() {
     let c = this.props.classes;
+    console.log("nothing found, loading", this.state.nothingFound, this.state.loading, SearchPage.hasQuery(this.props));
     return (
       <ContentTemplate title="Search results" search={this.state.search} history={this.props.history}>
         <Error error={this.state.error}/>
@@ -67,10 +76,8 @@ class SearchPage extends Component {
             {this.state.items && this.state.items.map(i => {
               return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}></SearchItem>)
             })}
-            {!this.state.loading && this.state.items !== null && this.state.items.length === 0
-            && SearchPage.hasQuery(this.props) && <NothingFound/>}
-            {this.state.items !== null && this.state.items.length === 0 && !SearchPage.hasQuery(this.props) &&
-            !this.state.loading && <SearchNotStarted/>}
+            {!this.state.loading && this.state.nothingFound && SearchPage.hasQuery(this.props) && <NothingFound/>}
+            {!SearchPage.hasQuery(this.props) && !this.state.loading && <SearchNotStarted/>}
           </List>
 
         </ScrollView>

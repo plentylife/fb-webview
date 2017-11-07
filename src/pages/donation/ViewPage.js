@@ -55,8 +55,12 @@ class ViewPage extends Component {
   }
 
   static getRef(props) {
-    let q = props.location.search.replace("?ref=", "");
-    return decodeURI(q)
+    if (props.location) {
+      let q = props.location.search.replace("?ref=", "");
+      return decodeURI(q)
+    } else {
+      return null
+    }
   }
 
   getData(props) {
@@ -109,8 +113,9 @@ class ViewPage extends Component {
 
             {this.state.displayEarnOptions && <TouchableWithoutFeedback onPress={() =>
               FbUtils.share(this.getId(this.props), this.state.tokens, this.onShare)}>
-              <View className={this.state.shareSuccess ? classes.successBackground : null}>
-                <Button className={cn(classes.secondaryButton, classes.withNormalTopMargin)}>by Sharing this
+              <View
+                className={cn(this.state.shareSuccess ? classes.successBackground : null, classes.withNormalTopMargin)}>
+                <Button className={cn(classes.secondaryButton)}>by Sharing this
                   Post</Button>
                 {this.state.shareSuccess && <Typography className={classes.shareSuccess}>
                   You will be rewarded {Tenge}hanks once your friends place bids
