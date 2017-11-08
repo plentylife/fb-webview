@@ -44,13 +44,14 @@ class App extends Component {
     let props = this.props;
     console.log("injecting fb libs", this.props);
 
+    ServerComms.heartbeat().then(info => {
+      this.setState({heartbeat: info})
+    });
+
     window.extAsyncInit = () => {
       console.log("extensions injected");
       props.loadedLibrary("ext");
       FbUtils.setContextVariables(this.onFbFail);
-      ServerComms.heartbeat().then(info => {
-        this.setState({heartbeat: info})
-      })
 
       // MessengerExtensions.getSupportedFeatures(function success(result) {
       //   let features = result.supported_features;

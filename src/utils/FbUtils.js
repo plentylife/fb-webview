@@ -74,10 +74,10 @@ export default class FbUtils {
         "type": "template",
         "payload": {
           "template_type": "generic",
+          'image_aspect_ratio': 'horizontal',
           "elements": [{
             "title": FbUtils.tokensToTitle(tokens),
             "image_url": globalViewPath("/resources/plenty_fb_header.0811.png"),
-            'image_aspect_ratio': 'horizontal',
             // "subtitle": "plenty will ",
             "default_action": {
               "type": "web_url",
