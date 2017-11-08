@@ -69,7 +69,7 @@ class SelectableToken extends Component {
         <Typography
           className={[classes.token, classes.selectable, this.props.isTagged ? classes.selected : ""].join(' ')}
           component={Text}>
-          {this.props.token}
+          {this.props.isTagged && '#'}{this.props.token}
         </Typography>
       </View>
 

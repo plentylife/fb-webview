@@ -27,7 +27,7 @@ const styles = theme => {
     adPaper: Object.assign({}, this.paper, {
       border: '1px solid black',
       borderRadius: 0,
-      background: 'url(' + viewPath('/resources/linedpaper.png') + ")"
+      background: 'url(' + viewPath('/resources/lightpaperfibers.png') + ")"
     }),
     adTitle: {
       borderBottom: '1px solid black',

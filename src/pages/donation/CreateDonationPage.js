@@ -107,7 +107,7 @@ function SelectTagsInstructions(props) {
   return (
     <Paper>
       <Typography>
-        Click to select at least one hashtag. Then press <i>`Publish`</i>.
+        Click to select at least one hashtag. Then press <i>Publish</i>.
       </Typography>
     </Paper>
   )
