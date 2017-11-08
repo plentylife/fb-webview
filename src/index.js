@@ -4,7 +4,6 @@ import Main from './controllers/Main';
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import reducer from "redux/reducers"
-import ServerComms from "./utils/ServerComms";
 
 // const store = createStore(reducer, {newOffer: {description: "doordash food delivery backpack in good condition. Two compartments, lined with foil on the inside, surprisingly light, side pockets. Size 1x2x3 feet."}});
 const store = createStore(reducer, {newOffer: {description: ""}});
@@ -26,8 +25,6 @@ try {
     initialProps: {},
     rootTag: document.getElementById('root')
   });
-
-  ServerComms.heartbeat();
 
   // console.re.log("no error")
 

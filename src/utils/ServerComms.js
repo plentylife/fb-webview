@@ -16,11 +16,17 @@ export default class ServerComms {
 
   static generateSignedRequest() {
     if (process.env.NODE_ENV === 'production') {
+      console.log("ServerComms in production");
       return new Promise(function (res, rej) {
         ServerComms.sRequestReject = rej;
         ServerComms.sRequestResolve = res
       });
     } else {
+      console.log("ServerComms in dev");
+      ServerComms.sRequestReject = (p) => {
+      };
+      ServerComms.sRequestResolve = (p) => {
+      };
       return Promise.resolve(
         // "r4JLrrEYvKn-1S_fEFmjqcTwr99YbrAYKYN92frktZw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODc3NTY1NSwicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjEzMTQwNjcwNjIwNTQ0OTIiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fVVNFUiIsInRpZCI6IjE0ODI4MDU5MTg0Njc0MDQifQ"
         'aTUejAIYVKl6uOU6203JDtlxOa0rtE3k8vYw_0TG8uc.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODUyNTg1MywicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjE3ODMxNDY2NzUwMzMxODMiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fUEFHRSIsInRpZCI6IjE3ODMxNDY2NzUwMzMxODMifQ'
@@ -99,9 +105,13 @@ export default class ServerComms {
   }
 
   static heartbeat() {
-    ServerComms.generateBody(null).then(b => {
+    return ServerComms.generateBody(null).then(b => {
       return fetch(backPath("/heartbeat"), {method: "POST", body: b}).then(resp => {
-        console.log("heartbeat status", resp.status)
+        if (resp.status === 404 || resp.status === 200) {
+          return ServerComms.toJsonOrReject(resp).then(j => (Object.assign(j, {isNew: resp.status === 404})))
+        } else {
+          throw new Error()
+        }
       })
     })
   }

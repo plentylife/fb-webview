@@ -49,7 +49,7 @@ const styles = theme => {
       flexGrow: 1,
       flexShrink: 1,
       color: theme.palette.text.secondary,
-      fontFamily: "'Patrick Hand', sans-serif"
+      fontFamily: "'Comfortaa', sans-serif"
       // marginLeft: '0.5em',
       // marginRight: '0.5em',
     },

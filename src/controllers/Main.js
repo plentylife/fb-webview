@@ -10,6 +10,8 @@ import FbUtils from 'utils/FbUtils'
 import {loadedLibrary} from "../redux/actions";
 import {connect} from 'react-redux'
 import SearchPage from 'pages/SearchPage'
+import IntroPages from "pages/IntroPages";
+import ServerComms from "../utils/ServerComms";
 
 class App extends Component {
 
@@ -18,9 +20,16 @@ class App extends Component {
     this.state = {
       fbFail: false,
       extLoaded: false,
-      sdkLoaded: false
+      sdkLoaded: false,
+      heartbeat: null,
+      hadIntro: false
     };
-    this.onFbFail = this.onFbFail.bind(this)
+    this.onFbFail = this.onFbFail.bind(this);
+    this.onIntro = this.onIntro.bind(this)
+  }
+
+  onIntro() {
+    this.setState({hadIntro: true})
   }
 
   onFbFail() {
@@ -39,14 +48,17 @@ class App extends Component {
       console.log("extensions injected");
       props.loadedLibrary("ext");
       FbUtils.setContextVariables(this.onFbFail);
+      ServerComms.heartbeat().then(info => {
+        this.setState({heartbeat: info})
+      })
 
-      MessengerExtensions.getSupportedFeatures(function success(result) {
-        let features = result.supported_features;
-        console.log("fb supported", features, result)
-      }, function error(err) {
-        console.log("fb supported error", err)
-        // error retrieving supported features
-      });
+      // MessengerExtensions.getSupportedFeatures(function success(result) {
+      //   let features = result.supported_features;
+      //   console.log("fb supported", features, result)
+      // }, function error(err) {
+      //   console.log("fb supported error", err)
+      //   // error retrieving supported features
+      // });
 
     };
 
@@ -57,7 +69,8 @@ class App extends Component {
     return (
         <MuiThemeProvider theme={theme}>
           <Router>
-            <MainView shouldFallback={this.state.fbFail}/>
+            <MainView shouldFallback={this.state.fbFail} heartbeat={this.state.heartbeat}
+                      onIntro={this.onIntro} hadIntro={this.state.hadIntro}/>
           </Router>
         </MuiThemeProvider>
     );
@@ -66,13 +79,19 @@ class App extends Component {
 
 function MainView(props) {
   // fixme add not found
+  console.log("main view", props, props.heartbeat);
   return (
-    <View id="app-container">
+    <View id="app-container" style={{height: "100%"}}>
       {props.shouldFallback && <Redirect to={viewPath("/fallback")}/>}
+      {props.heartbeat && props.heartbeat.isNew && !props.hadIntro && <Redirect to={viewPath("/intro")} push/>}
       <Switch>
         <Route exact path={viewPath("/fallback")} component={FallbackPage}/>
         <Route path={viewPath("/donation")} component={DonationRouter}/>
         <Route path={viewPath("/search")} component={SearchPage}/>
+        <Route path={viewPath("/intro")} render={rp => {
+          console.log("intro render route");
+          return <IntroPages {...rp} info={props.heartbeat} onIntro={props.onIntro}/>
+        }}/>
       </Switch>
     </View>
   )
