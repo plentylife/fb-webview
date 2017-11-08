@@ -67,6 +67,8 @@ export default class FbUtils {
   static share(donationId, tokens, onFinish) {
     let ref = FbUtils.userId;
 
+    console.log("sharing");
+
     let messageToShare = {
       "attachment": {
         "type": "template",
@@ -100,11 +102,12 @@ export default class FbUtils {
         // share the message?
 
         console.log("sharing", response);
-        onFinish()
+        onFinish(true)
 
       }, function error(errorCode, errorMessage) {
         // An error occurred in the process
-        console.log("error sharing", errorCode, errorMessage)
+        console.log("error sharing", errorCode, errorMessage);
+        onFinish(false)
       },
       messageToShare, "broadcast");
   }

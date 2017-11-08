@@ -36,6 +36,7 @@ class ViewPage extends Component {
       userInfo: null,
       commentsLink: "https://facebook.com/" + this.getId(props),
       shareSuccess: false,
+      shareError: false,
       displayEarnOptions: false
     };
 
@@ -85,8 +86,12 @@ class ViewPage extends Component {
     }
   }
 
-  onShare() {
-    this.setState({shareSuccess: true})
+  onShare(success) {
+    if (success) {
+      this.setState({shareSuccess: true, shareError: false})
+    } else {
+      this.setState({shareSuccess: false, shareError: true})
+    }
   }
 
   onEarnPress() {
@@ -114,11 +119,16 @@ class ViewPage extends Component {
             {this.state.displayEarnOptions && <TouchableWithoutFeedback onPress={() =>
               FbUtils.share(this.getId(this.props), this.state.tokens, this.onShare)}>
               <View
-                className={cn(this.state.shareSuccess ? classes.successBackground : null, classes.withNormalTopMargin)}>
+                className={cn(this.state.shareSuccess ? classes.successBackground : null,
+                  this.state.shareError ? classes.failureBackground : null,
+                  classes.withNormalTopMargin)}>
                 <Button className={cn(classes.secondaryButton)}>by Sharing this
                   Post</Button>
                 {this.state.shareSuccess && <Typography className={classes.shareSuccess}>
                   You will be rewarded {Tenge}hanks once your friends place bids
+                </Typography>}
+                {this.state.shareError && <Typography className={classes.shareSuccess}>
+                  oops... some error occurred
                 </Typography>}
               </View>
             </TouchableWithoutFeedback>}

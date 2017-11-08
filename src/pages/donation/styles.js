@@ -1,4 +1,4 @@
-import {lightGreen} from 'material-ui/colors';
+import {amber, lightGreen} from 'material-ui/colors';
 import {viewPath} from "../../utils/Common";
 
 const styles = theme => {
@@ -176,6 +176,9 @@ const styles = theme => {
     },
     successBackground: {
       backgroundColor: lightGreen['500']
+    },
+    failureBackground: {
+      backgroundColor: amber['500']
     },
     waitButton: {
       backgroundColor: lightGreen['500']
