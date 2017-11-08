@@ -50,14 +50,13 @@ export default class FbUtils {
   }
 
   static tokensToTitle(tokens) {
-    console.log("to tilte", tokens);
-    let title = 'Tagged with:';
+    let title = '';
     tokens.forEach(t => {
       if (t.isTagged) {
-        title += " " + t.token
+        title += " #" + t.token
       }
     });
-    return title
+    return title.trim()
   }
 
 
@@ -75,8 +74,9 @@ export default class FbUtils {
           "template_type": "generic",
           "elements": [{
             "title": FbUtils.tokensToTitle(tokens),
-            "image_url": globalViewPath("/resources/plenty_fb_header.png"),
-            // "subtitle": "",
+            "image_url": globalViewPath("/resources/plenty_fb_header.0811.png"),
+            'image_aspect_ratio': 'horizontal',
+            // "subtitle": "plenty will ",
             "default_action": {
               "type": "web_url",
               "webview_height_ratio": "full",
