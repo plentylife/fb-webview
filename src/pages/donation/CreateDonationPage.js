@@ -10,7 +10,9 @@ import styles from './styles'
 import EnterDescription from './EnterDescripton'
 import SelectTags from './SelectTags'
 import Server from 'utils/ServerComms'
-import {Typography} from "material-ui";
+import {Button, Typography} from "material-ui";
+import cn from 'classnames'
+import FbUtils from "../../utils/FbUtils";
 
 class CreateDonationPages extends Component {
   constructor(props) {
@@ -90,7 +92,8 @@ class CreateDonationPages extends Component {
     let classes = this.props.classes;
     return (
       <ContentTemplate title={this.titles[this.state.tagSelectionMode ? 1 : 0]} history={this.props.history}>
-        {(this.state.tagSelectionMode) && <SelectTagsInstructions/>}
+        {(!this.state.tagSelectionMode) && <DescriptionInstructions classes={classes}/>}
+        {(this.state.tagSelectionMode) && <SelectTagsInstructions classes={classes}/>}
         <Paper component={View} elevation={2} className={classes.paper}>
           <Error error={this.state.error}/>
           {(!this.state.tagSelectionMode) && <EnterDescription onNext={this.onNext}/>}
@@ -98,18 +101,29 @@ class CreateDonationPages extends Component {
           <SelectTags onBack={this.onBack} onSelect={this.onSelect} onPublish={this.onPublish}
                       isPublishing={this.state.isPublishing}/>}
         </Paper>
+        {(!this.state.tagSelectionMode) &&
+        <Button className={cn(classes.secondaryButton, classes.shareCreateButton)}
+                onClick={FbUtils.shareNewDonation}>Share this gem!</Button>}
       </ContentTemplate>
     );
   }
 }
 
-function SelectTagsInstructions(props) {
+function DescriptionInstructions(props) {
+  let c = props.classes;
   return (
-    <Paper>
-      <Typography>
-        Click to select at least one hashtag. Then press <i>Publish</i>.
+    <Typography className={c.instructions}>
+      So you're offering something? Describe what it is, then press <i>Next</i>
       </Typography>
-    </Paper>
+  )
+}
+
+function SelectTagsInstructions(props) {
+  let c = props.classes;
+  return (
+    <Typography className={c.instructions}>
+      Click to select at least one hashtag. Then press <i>Publish</i>.
+    </Typography>
   )
 }
 

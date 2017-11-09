@@ -13,6 +13,14 @@ const styles = theme => {
       flexDirection: 'row',
       justifyContent: 'center'
     },
+    shareCreateButton: {
+      width: '10em',
+      alignSelf: 'center'
+    },
+    instructions: {
+      textAlign: 'center',
+      marginTop: theme.spacing.unit
+    },
     paper: theme.mixins.gutters({
       paddingBottom: theme.spacing.unit,
       paddingTop: theme.spacing.unit,

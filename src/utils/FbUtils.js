@@ -67,7 +67,7 @@ export default class FbUtils {
   static share(donationId, tokens, onFinish) {
     let ref = FbUtils.userId;
 
-    console.log("sharing");
+    console.log("sharing donation");
 
     let messageToShare = {
       "attachment": {
@@ -90,6 +90,54 @@ export default class FbUtils {
               "webview_height_ratio": "full",
               "messenger_extensions": true,
               "url": FbUtils.globalViewPathWithRef("/donation/" + donationId, ref),
+              "title": "View"
+            }]
+          }]
+        }
+      }
+    };
+
+    MessengerExtensions.beginShareFlow(function success(response) {
+        // User dismissed without error, but did they
+        // share the message?
+
+        console.log("sharing", response);
+        onFinish(true)
+
+      }, function error(errorCode, errorMessage) {
+        // An error occurred in the process
+        console.log("error sharing", errorCode, errorMessage);
+        onFinish(false)
+      },
+      messageToShare, "broadcast");
+  }
+
+  static shareNewDonation(onFinish) {
+    let ref = FbUtils.userId;
+
+    console.log("sharing donation");
+
+    let messageToShare = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          'image_aspect_ratio': 'horizontal',
+          "elements": [{
+            "title": "Plenty -- where money is the root of all good",
+            "image_url": globalViewPath("/resources/plenty_fb_donate_header.0911.png"),
+            // "subtitle": "Plenty is a special type of auction, w",
+            "default_action": {
+              "type": "web_url",
+              "webview_height_ratio": "full",
+              "messenger_extensions": true,
+              "url": FbUtils.globalViewPathWithRef("/donation/create", ref)
+            },
+            "buttons": [{
+              "type": "web_url",
+              "webview_height_ratio": "full",
+              "messenger_extensions": true,
+              "url": FbUtils.globalViewPathWithRef("/donation/create", ref),
               "title": "View"
             }]
           }]
