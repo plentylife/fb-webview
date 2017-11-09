@@ -61,8 +61,9 @@ module.exports = {
     // andrey dev
     // r4JLrrEYvKn-1S_fEFmjqcTwr99YbrAYKYN92frktZw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTUwODc3NTY1NSwicGFnZV9pZCI6MTQyMDc0MTU0MTMwODE0NCwicHNpZCI6IjEzMTQwNjcwNjIwNTQ0OTIiLCJ0aHJlYWRfdHlwZSI6IlVTRVJfVE9fVVNFUiIsInRpZCI6IjE0ODI4MDU5MTg0Njc0MDQifQ
 
-    new UglifyJSPlugin(),
     // new ExtractPlugin("styles.css"),
+
+    new UglifyJSPlugin(),
     new webpack.DefinePlugin({
       // "process.env.PACK_TIME": JSON.stringify(time),
       "process.env.NODE_ENV": JSON.stringify('production'),

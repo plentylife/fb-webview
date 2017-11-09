@@ -44,7 +44,7 @@ class SearchPage extends Component {
 
   update(props) {
     // this.setState({loading: true});
-    if (SearchPage.getQuery(props)) {
+    // if (SearchPage.getQuery(props)) {
       new Promise((resolve, reject) => {
         this.setState({loading: true});
         ServerComms.search(SearchPage.getQuery(props)).then(res => {
@@ -60,7 +60,7 @@ class SearchPage extends Component {
 
         resolve()
       })
-    }
+    // }
   }
 
   render() {
@@ -74,10 +74,10 @@ class SearchPage extends Component {
         <ScrollView className={c.scrollView}>
           <List>
             {this.state.items && this.state.items.map(i => {
-              return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}></SearchItem>)
+              return (<SearchItem id={i.id} key={i.id} tokens={i.tokens}/>)
             })}
-            {!this.state.loading && this.state.nothingFound && SearchPage.hasQuery(this.props) && <NothingFound/>}
-            {!SearchPage.hasQuery(this.props) && !this.state.loading && <SearchNotStarted/>}
+            {!this.state.loading && this.state.nothingFound && <NothingFound/>}
+
           </List>
 
         </ScrollView>
@@ -86,6 +86,9 @@ class SearchPage extends Component {
   }
 
 }
+
+//{/*{!this.state.loading && this.state.nothingFound && SearchPage.hasQuery(this.props) && <NothingFound/>}*/}
+//{/*{!SearchPage.hasQuery(this.props) && !this.state.loading && <SearchNotStarted/>}*/}
 
 class SearchItemComp extends Component {
   constructor(props) {

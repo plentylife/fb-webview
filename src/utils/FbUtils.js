@@ -138,7 +138,7 @@ export default class FbUtils {
               "webview_height_ratio": "full",
               "messenger_extensions": true,
               "url": FbUtils.globalViewPathWithRef("/donation/create", ref),
-              "title": "View"
+              "title": "Make an Offer"
             }]
           }]
         }
