@@ -77,13 +77,6 @@ const styles = theme => {
       // color: theme.palette.secondary["900"]
       color: 'black'
     },
-    rowFlex: {
-      display: 'flex',
-      flexDirection: 'row',
-    },
-    fullWidth: {
-      width: '100%'
-    },
     nested: {
       paddingLeft: theme.spacing.unit * 4,
     },
@@ -152,6 +145,9 @@ const styles = theme => {
       marginTop: '0.3em',
       marginBottom: '0.3em',
     },
+    earnContainer: {
+      minWidth: '10em'
+    },
 
 
     rpButton: {
@@ -202,7 +198,14 @@ const styles = theme => {
     flexRow: {
       display: 'flex',
       flexDirection: 'row'
-    }
+    },
+    rowFlex: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    fullWidth: {
+      width: '100%'
+    },
   }
 };
 

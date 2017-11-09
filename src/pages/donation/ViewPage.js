@@ -104,7 +104,7 @@ class ViewPage extends Component {
       <Container title="Viewing an offer" inline={this.props.inline} history={this.props.history}>
         <View className={classes.controlPanelContainer}>
           <BidDash id={this.getId(this.props)} referrer={ViewPage.getRef(this.props)}/>
-          <View className={cn(classes.centerItems)}>
+          <View className={cn(classes.centerItems, classes.earnContainer)}>
             {!this.state.displayEarnOptions &&
             <TouchableWithoutFeedback onPress={this.onEarnPress}>
               <View>
