@@ -115,7 +115,7 @@ export default class FbUtils {
   static shareNewDonation(onFinish) {
     let ref = FbUtils.userId;
 
-    console.log("sharing donation");
+    console.log("sharing offer page");
 
     let messageToShare = {
       "attachment": {
@@ -125,7 +125,7 @@ export default class FbUtils {
           'image_aspect_ratio': 'horizontal',
           "elements": [{
             "title": "Plenty -- where money is the root of all good",
-            "image_url": globalViewPath("/resources/plenty_fb_donate_header.0911.png"),
+            "image_url": globalViewPath("/resources/plenty_fb_donate_header.1211.png"),
             // "subtitle": "Plenty is a special type of auction, w",
             "default_action": {
               "type": "web_url",
@@ -150,7 +150,7 @@ export default class FbUtils {
         // share the message?
 
         console.log("sharing", response);
-        onFinish(true)
+        onFinish(response.is_sent)
 
       }, function error(errorCode, errorMessage) {
         // An error occurred in the process
